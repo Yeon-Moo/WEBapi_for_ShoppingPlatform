@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  div#header
+    div#title 
+        a(href="/" class="normaltextlink" )
+          span(style="color:aqua") Yeon's  
+          | &nbsp Shop
+    div#search  
+      #searchinput()
+        input(type="text" placeholder="請輸入欲搜尋商品" style="border-radius:5%;top:3px; width:600px;")                                                                             
+
+    div#users 
+      div
+        a(href="/users/login" class="normaltextlink") Login 
+      div
+        a(href="/users/register" class="normaltextlink") Register
+      
+  div#goods
+    div#content
+      h1 Hello #{title}
+      p Welcome to Yeon's Shop #{title} !!!
+  div 
+    a(href="/users/logout") Logout 
+
