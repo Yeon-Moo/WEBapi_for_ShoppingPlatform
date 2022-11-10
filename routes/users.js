@@ -83,7 +83,7 @@ router.post('/login', function(req, res, next) {//上傳登入資料
     page_login(req,res);
   }else{
     if(password==row[0].password){
-      res.cookie('certifiedUser',username,{path:'/',httpOnly:true,maxAge:600000});
+      res.cookie('certifiedUser',username,{path:'/',httpOnly:true,maxAge:6000000000});
       console.log("give cookie");
       return res.redirect('/');
     }else page_login(req,res);

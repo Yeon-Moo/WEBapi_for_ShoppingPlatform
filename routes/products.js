@@ -47,12 +47,12 @@ router.post('/myproduct/upload',upload.array('Product_Image'), function(req, res
   console.log(req.body);
   console.log(req.files);
   var File=req.body;
-  fs.mkdir(`./users/${req.cookies.certifiedUser}`, { recursive: true }, (err) => {
+  fs.mkdir(`./users/${req.cookies.certifiedUser}/${File.Product_Name}`, { recursive: true }, (err) => { //若使用者沒有自己的圖片庫 創建一個
     if (err) throw err;
 });
   for(var i=0;i<req.files.length;i++){
     fs.rename( `./${req.files[i].path}`, //用重命名的方式來移動圖片 第一個參數為舊路徑
-              `./users/${req.cookies.certifiedUser}/${req.files[i].filename}`,//第二個為新路徑
+              `./users/${req.cookies.certifiedUser}/${File.Product_Name}/${req.files[i].filename}`,//第二個為新路徑
               function(err){
       console.log(err);
     });
@@ -78,6 +78,8 @@ router.post('/myproduct/upload',upload.array('Product_Image'), function(req, res
 });
 
 router.delete('/myproduct', function(req, res, next) {
+  
+ 
   if(req.cookies.username){
     res.render('index', { title: req.cookies.username });
   }else{
@@ -107,6 +109,8 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/myproduct', function(req, res, next) {
+  var files=fs.readdirSync('./users/admin');
+  console.log(files.length);
   if(req.cookies.certifiedUser){
     res.render('MyProducts');
   }else{

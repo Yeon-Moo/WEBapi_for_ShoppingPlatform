@@ -18,6 +18,7 @@ body {
   background-color: purple;
   width:1540px;
   height:40px;
+  z-index: 0;
 }
 #header #title{
   margin: 0px;
@@ -34,10 +35,13 @@ body {
   display:flex;
   align-items:center;
   color:azure;
+  width: 900px;
+  height: 40px;
 }
 #header #search .searchinput{
   display:flex;
   align-items:center;
+  flex-direction: row;
   
 }
 #header #users{
@@ -45,8 +49,6 @@ body {
   right:150px;
   display: flex;
 flex-direction: row;
-  
- 
   width: 120px;
   height:30px;
 }
@@ -145,4 +147,19 @@ a {
 
 .goods{
 
+}
+
+
+.search_button{
+  position: absolute;
+  top:5px;
+  width:30px;
+  Height:30px;
+  border:10px;
+  padding:0px;
+
+  border-left:30px;
+}
+.search_button:hover{
+  background-color: black;
 }

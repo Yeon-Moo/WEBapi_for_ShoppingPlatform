@@ -13,9 +13,11 @@ html
                 | &nbsp Shop 
              
           div#search  
-            div#searchinput
-              input(type="text" placeholder="請輸入欲搜尋商品" style="width:600px;")   
-              input(type="submit",value="",style="width:23px;Height:23px;border:10px;" )   
+            div.searchinput
+              div
+                input(type="text" placeholder="請輸入欲搜尋商品" style="height:25px;width:700px;z-index:-1;")   
+              div
+                input(type="submit",value="",class="search_button")   
           block users
             div#users 
               div 
@@ -24,7 +26,7 @@ html
                   a(href="/users/register") 註冊     
     
                                                                            
-
+    br
     block content
       div.content
         div.goods
