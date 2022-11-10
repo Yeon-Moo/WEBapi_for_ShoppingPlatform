@@ -5,7 +5,7 @@ block content
 
     p Hello
     div#upload_product
-        form(action="", method="post"  ) 
+        form(action="/products/myproduct/upload", method="POST" enctype="multipart/form-data" ) 
             div(class="upload_info")
                 div(class="upload_input1")
                     div 
@@ -15,12 +15,20 @@ block content
                     div 
                         label(for="Product_Discribtion") 產品描述
                         input(type="text", name="Product_Discribtion", class="upload_text")
-
+           
                 div(class="upload_input1 ")
                     div
                         label(for="Product_Content") 產品內容
                         textarea(name="Product_Content", cols="30", rows="10",class="upload_text",style="height:100px;") 
+                div(class="upload_input1 ")
+                    div 
+                        input(type="file" onchange ="preview()" name="Product_Image" multiple="multiple" accept="image/gif, image/jpeg, image/png")
                 div(class="upload_input1")
                     div
-                        button(type="submit" ,name="Product_Submit_Button",id="Product_Submit_Button" )提交
-                
+                        button(type="submit" ,name="Product_Submit_Button",id="Product_Submit_Button" ) 提交
+                div(class="upload_input1")
+                    div
+                        <img id="frame" src="" width="500px" height="300px"/>
+                        <img id="frame1" src="" width="500px" height="300px"/>
+    script(src="/javascripts/preview.js")
+        

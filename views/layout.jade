@@ -3,16 +3,37 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-
+    link(rel="stylesheet",href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
   body
 
     div#header
           div#title 
               a(href="/" class="normaltextlink" )
                 span(style="color:aqua") Yeon's  
-                | &nbsp Shop
+                | &nbsp Shop 
+             
           div#search  
-            #searchinput()
-              input(type="text" placeholder="請輸入欲搜尋商品" style="border-radius:5%;top:3px; width:600px;")                                                                             
-    block content
+            div#searchinput
+              input(type="text" placeholder="請輸入欲搜尋商品" style="width:600px;")   
+              input(type="submit",value="",style="width:23px;Height:23px;border:10px;" )   
+          block users
+            div#users 
+              div 
+                  a(href="/users/login") 登入
+              div 
+                  a(href="/users/register") 註冊     
+    
+                                                                           
 
+    block content
+      div.content
+        div.goods
+          h1 Hello #{title}
+          p Welcome to Yeon's Shop #{title} !!!
+          i(class="fa-solid fa-magnifying-glass")
+        div 
+          a(href="/users/logout") Logout 
+
+
+
+   

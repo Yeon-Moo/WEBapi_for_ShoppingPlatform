@@ -4,7 +4,9 @@ const fs=require('fs');
 const database=require('better-sqlite3');//同步版的sqlite3
 const Users=new database('./database/userfile.db');
 const session=require('express-session');
+
 var bodyParser = require('body-parser');
+
 
 
 var page_login=function(req,res){
@@ -88,9 +90,14 @@ router.post('/login', function(req, res, next) {//上傳登入資料
   }
 });
 
-router.get('/', function(req, res, next) {//取得login頁面
+router.get('/', function(req, res, next) {//取得首頁頁面
   var islogin=false;
-  res.render('index', { title: req.cookies.certifiedUser });
+  if(req.cookies.certifiedUser){
+    res.render('users', { title: req.cookies.certifiedUser,name:req.cookies.certifiedUser });
+  }else{
+    res.render('guest', { title: "guest" });
+  }
+  
 
 });
 
