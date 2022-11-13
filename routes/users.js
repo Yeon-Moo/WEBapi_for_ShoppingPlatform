@@ -47,6 +47,8 @@ router.get('/login', function(req, res, next) {//取得login頁面
 router.post('/register', function(req, res, next) {//上傳註冊資料
  // 取得使用者註冊資料
  const { username, email, password, confirmPassword } = req.body
+ res.clearCookie('sameUsername',{path:'/users'});
+ res.clearCookie('sameEmail',{path:'/users'});
   console.log(req.body);
   var sqlInsert=`INSERT INTO user_register ("username","email","password") VALUES(?,?,?)`;
   var sqlsearch=`SELECT * FROM user_register WHERE (username='${username}') OR (email='${email}')`;
@@ -79,14 +81,21 @@ router.post('/login', function(req, res, next) {//上傳登入資料
   var sqlsearch=`SELECT * FROM user_register WHERE username='${username}'`;
   const stmt=Users.prepare(sqlsearch);//使用前都要加prepare(sql)
   var row=stmt.all();
-  if(row.length==[]){
-    page_login(req,res);
+  if(row.length==[]){//若於資料庫內找不到相關的帳號 網頁就跳出警告視窗
+    res.setHeader("Content-Type","text/html");
+      res.send(`<script>alert('帳號輸入錯誤');
+      location.href='/users/login'</script>`);
   }else{
     if(password==row[0].password){
       res.cookie('certifiedUser',username,{path:'/',httpOnly:true,maxAge:6000000000});
       console.log("give cookie");
       return res.redirect('/');
-    }else page_login(req,res);
+    }else{          //若於資料庫內的帳號 與密碼不匹配 網頁就跳出警告視窗
+      res.setHeader("Content-Type","text/html");
+      res.send(`<script>alert('密碼輸入錯誤');
+      location.href='/users/login'</script>`);
+    } 
+   
   }
 });
 

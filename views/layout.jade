@@ -4,37 +4,41 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet",href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    script(src="/javascripts/axios.min.js")
+    script(src="/javascripts/jquery.js")  
   body
-
-    div#header
-          div#title 
-              a(href="/" class="normaltextlink" )
-                span(style="color:aqua") Yeon's  
-                | &nbsp Shop 
-             
-          div#search  
-            div.searchinput
-              div
-                input(type="text" placeholder="請輸入欲搜尋商品" style="height:25px;width:700px;z-index:-1;")   
-              div
-                input(type="submit",value="",class="search_button")   
-          block users
-            div#users 
-              div 
-                  a(href="/users/login") 登入
-              div 
-                  a(href="/users/register") 註冊     
-    
-                                                                           
-    br
-    block content
-      div.content
-        div.goods
-          h1 Hello #{title}
-          p Welcome to Yeon's Shop #{title} !!!
-          i(class="fa-solid fa-magnifying-glass")
-        div 
-          a(href="/users/logout") Logout 
+    div
+      div#header
+            div#title 
+                a(href="/" class="normaltextlink" )
+                  span(style="color:aqua") Yeon's  
+                  | &nbsp Shop 
+              
+            div#search  
+              div.searchinput
+                div
+                  input(type="text" placeholder="請輸入欲搜尋商品" style="height:25px;width:700px;z-index:-1;")   
+                div
+                  input(type="submit",value="",class="search_button")   
+            block users
+              div#users 
+                div 
+                    a(href="/users/login") 登入
+                div 
+                    a(href="/users/register") 註冊     
+      
+                                                                            
+      br
+      br 
+      br
+      block content
+        div.content
+          div.goods
+            h1 Hello #{title}
+            p Welcome to Yeon's Shop #{title} !!!
+            i(class="fa-solid fa-magnifying-glass")
+          div 
+            a(href="/users/logout") Logout 
 
 
 
