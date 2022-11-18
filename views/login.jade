@@ -1,6 +1,15 @@
 extends layout 
 
 block content 
-  h1=Welcome to login {}
-
+      h1 Login   
+      form(method='POST', action='/users/login')
+        label(for='username') username      
+        input#username(type='text', name='username')
+        // name是提交表單後 伺服器收到資料名稱
+        label(for='password')  password         
+        input#password(type='password', name='password')
+        // type="password" 會隱藏輸入的文字
+        input(type='submit', value='登入')
+      h1
+        a(href='/users/register') Not Register?
 

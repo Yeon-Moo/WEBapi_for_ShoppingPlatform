@@ -3,7 +3,8 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel="stylesheet",href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    script(src="/javascripts/font-awesome.js")
     script(src="/javascripts/axios.min.js")
     script(src="/javascripts/jquery.js")  
   body
@@ -12,16 +13,18 @@ html
             div#title 
                 a(href="/" class="normaltextlink" )
                   span(style="color:aqua") Yeon's  
-                  | &nbsp Shop 
+                  | Shop 
               
             div#search  
               div.searchinput
                 div
-                  input(type="text" placeholder="請輸入欲搜尋商品" style="height:25px;width:700px;z-index:-1;")   
-                div
-                  input(type="submit",value="",class="search_button")   
+                  input(type="text" placeholder="請輸入欲搜尋商品" style="border:0px;height:25px;width:700px;z-index:-1;")   
+                div(style="width:25px;height:35px;")
+                  button(type="button" class="btn btn-primary" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;")
+                     i(class="fas fa-search")
+  
             block users
-              div#users 
+              div.users 
                 div 
                     a(href="/users/login") 登入
                 div 
@@ -37,8 +40,10 @@ html
             h1 Hello #{title}
             p Welcome to Yeon's Shop #{title} !!!
             i(class="fa-solid fa-magnifying-glass")
-          div 
-            a(href="/users/logout") Logout 
+            div 
+              a(href="/users/logout") Logout
+            div 
+              
 
 
 

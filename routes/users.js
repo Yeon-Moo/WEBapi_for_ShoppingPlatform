@@ -10,27 +10,13 @@ var bodyParser = require('body-parser');
 
 
 var page_login=function(req,res){
-  fs.readFile("./public/html/login.html",function(err,data){
-  if(err)console.log(err);
-  else{
-    res.setHeader("Content-Type","text/html");
-    res.end(data);
-  }
-})
+  res.render('login');
 }
 
 
 
 var page_register=function(req,res){
-  fs.readFile("./public/html/register.html",function(err,data){
-    if(err){
-      console.log(err);
-    }
-    else{
-      res.setHeader("Content-Type","text/html");
-      res.end(data);
-    }
-  })
+  res.render('register')
 }
 
 

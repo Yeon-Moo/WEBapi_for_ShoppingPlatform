@@ -5,10 +5,13 @@ block users
 block content 
     div.content
         div.goods 
-        script(src="/javascripts/Product.js") 
-        div 
-            button(style="width:50px;height:50px;position:absolute;",onclick='location.href=`./myproduct/upload`') 上架
+      
+        div(style="display:flex;flex-direction:column;width:200px;height:200px;")
+            div
+                button(style="position:relative;width:50px;height:50px;",onclick='location.href=`./myproduct/upload`') 上架
+            div
+                button(style="position:relative;width:50px;height:50px;", id="delete_button") 下架
     
     
-   
+          script(src="/javascripts/Product.js") 
             

@@ -5,7 +5,8 @@ $(document).ready(function(){
     .then(res=>{
         var UAPInfo=res.data;
         var UAP_Product_Info=UAPInfo.Product_Info;
-        console.log(UAPInfo.Product_Info);
+        var allImage=UAPInfo.Product_Image;
+        console.log(UAPInfo);
 
     
         if(UAPInfo.Product_Info.length){
@@ -21,25 +22,31 @@ $(document).ready(function(){
             var first=document.createElement('p')
             var img=document.createElement('img');
             var ProductInfo_div=document.createElement('div');
-
-
+            var ProductPrice=document.createElement('div');
+            var delete_btn_div=document.createElement('div');
+            var delete_btn=document.createElement('button');
             contentDiv.style="display:flex;flex-direction:row";
             contentDiv.className="123";
 
-            if(i%2===0){
-                Product_link.href="https://shopee.tw/";
-               }else{
-                Product_link.href="https://www.google.com/search?q=6*250&oq=6*250&aqs=chrome..69i57.1008j0j7&sourceid=chrome&ie=UTF-8"
-               }
-
-            ImageDiv.src=`./../img/yu10p/${i+1}/0.png`;
+            
+            Product_link.style="text-decoration:none;color:black;";
+            ImageDiv.src=`./../img${UAP_Product_Info[i].Product_Image_Address}`;
             ImageDiv.style="width:200px;Height:200px;";
             ProductDiv.style="margin:1px;width:205px;display:flex;flex-direction:column;border:1px;border-style:solid;";
             ProductName_div.innerHTML=UAP_Product_Info[i].Product_Name;//商品名稱
             firstDiv.style=`display:flex;flex-direction:row;width:1300px;height:1000px;flex-wrap:wrap;align-content:flex-start`;
-            ProductPrice_div.innerHTML=`$`+`${UAP_Product_Info[i].Product_Price}`;//商品價格
-
-
+            ProductPrice_div.style="display:flex;flex-direction:row;";
+            ProductPrice.style="width:80px;justify-content:center;"
+            ProductPrice.innerHTML=`$`+`${UAP_Product_Info[i].Product_Price} `;//商品價格
+            delete_btn.classList="delete btn btn-danger";
+            delete_btn.value=UAP_Product_Info[i].Upload_User_Product_ID;
+            
+            delete_btn.style="font-size:5px; padding-top:3px;padding-bottom:3px;"
+            delete_btn.innerHTML="刪除";
+            delete_btn_div.appendChild(delete_btn);
+            ProductPrice_div.appendChild(ProductPrice);
+            ProductPrice_div.appendChild(delete_btn_div);
+            
             
             ProductInfo_div.appendChild(ProductName_div);
             ProductInfo_div.appendChild(ProductPrice_div);
@@ -49,8 +56,18 @@ $(document).ready(function(){
             Product.appendChild(Product_link);
             contentDiv.appendChild(Product);
             contentDiv.appendChild(Product);
-            firstDiv.appendChild(contentDiv);
+            firstDiv.appendChild(contentDiv);   
         }
+        $('.delete').click(function(){
+            console.log(event.target.value);
+            console.log('hello');
+            axios.delete(`/products/myproduct?Product_ID=${event.target.value}`)
+            .then(res=>{
+                console.log('res finish');
+                location.replace('/products/myproduct');
+            })
+        
+        })
        
     }
     else{
@@ -58,11 +75,6 @@ $(document).ready(function(){
         var text=document.createTextNode("目前沒有商品上架中");
         firstDiv.appendChild(text);
     }
-
-
-
-
-
 
     })
 

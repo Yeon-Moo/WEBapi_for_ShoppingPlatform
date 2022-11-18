@@ -58,7 +58,11 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
     console.log(req.body);
     console.log(req.files);
     var File = req.body;
-
+    if(req.body.Product_Name==''){
+      res.setHeader("Content-Type", "text/html");
+      res.send(`<script>alert('您必須輸入產品名稱!!!!!');
+                          location.href='/products/myproduct/upload'</script>`);
+    }
     var sqlsearch = `SELECT UID FROM user_register WHERE (username='${req.cookies.certifiedUser}')`;
     //var Productsearch=`SELECT * FROM  Uploaded_Product_Info WHERE ((Product_Name='${File.Product_Name}') AND (Upload_User_Name='${req.cookies.certifiedUser})')`;
     var sqlInsert = `INSERT INTO  Uploaded_Product_Info (
@@ -72,7 +76,7 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
   "Upload_User_Product_ID") VALUES(?,?,?,?,?,?,?,?)`;
 
     var UMPIDsearch = `SELECT Upload_User_Product_ID
-  FROM Uploaded_Product_Info WHERE (Upload_User_Name='yu10p')`; //找出目前使用者已上傳商品中的最大值 (User_Product_ID)
+  FROM Uploaded_Product_Info WHERE (Upload_User_Name='${req.cookies.certifiedUser}')`; //找出目前使用者已上傳商品中的最大值 (User_Product_ID)
 
     const stmt = Users.prepare(sqlsearch);
     const dbinsert = Users.prepare(sqlInsert);
@@ -87,27 +91,21 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
       }
     }
     var UID = row[0].UID;
-
+    let ext=req.files[0].path.toString().split('.')[1];
   
     dbinsert.run(
       File.Product_Name,//insert Product Name
       File.Product_Discribtion,//insert Product Discribtion
       File.Product_Content,//insert Product Content
       File.Product_Price,//insert Product Price
-      `./users/${req.cookies.certifiedUser}/${max + 1}`,//insert Image Address
+      `/${req.cookies.certifiedUser}/${max + 1}/0.${ext}`,//insert Image Address
       req.cookies.certifiedUser,//insert the Username  Who is uploading now
       UID,//insert the ID of the User is uploading 
       max + 1//insert the User's New Product ID
     );
 
-    fs.mkdir(
-      `./users/${req.cookies.certifiedUser}/${max + 1}`,
-      { recursive: true },
-      (err) => {
-        //若使用者沒有自己的圖片庫 創建一個
-        if (err) throw err;
-      }
-    );
+    fs.mkdirSync(
+      `./users/${req.cookies.certifiedUser}/${max + 1}`, { recursive: true });
     for (var i = 0; i < req.files.length; i++) {
       let ext=req.files[i].path.toString().split('.')[1];
       fs.rename(
@@ -118,7 +116,7 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
         }
       );
     }
-    return res.redirect("/products/myproduct/upload"); //結束這個API後要記得改寫成到myproduct
+    return res.redirect("/products/myproduct"); //結束這個API後要記得改寫成到myproduct
   }
 );
 
@@ -138,17 +136,25 @@ router.get("/myproduct_json", function (req, res, next) {//用來向網頁發送
   var UAPsearch = `SELECT * FROM Uploaded_Product_Info WHERE (Upload_User_Name='${req.cookies.certifiedUser}')`; //User All Product search
   var UAP_prepare=Users.prepare(UAPsearch);
   var UAP=UAP_prepare.all();
-  console.log(UAP.length);
+//讀取文件夾中所有的圖片
+  //var allImage=fs.readdirSync('./users/yu10p/1');
+ 
+  //console.log(allImage.toString());
+
 
   fs.readFile('./public/json/Product_Info.json',function(err,ProductInfo){
     if(err)console.log(err);
     var Product=ProductInfo.toString(); //將二進制數據轉回字串
-    console.log(ProductInfo);
     Product=JSON.parse(Product);
+    //這段用以將文件夾裡所有圖片的名稱推送到json中 日後可能會用到 先行保留
+    // for(var i=0;i<allImage.length;i++){   
+    //   Product.Product_Image.push(allImage[i]);
+    // }
     for(var i=0;i<UAP.length;i++){
       Product.Product_Info.push(UAP[i]);
     }
     Product.total=UAP.length;
+    console.log(Product);
     res.json(Product);
 
   })
@@ -157,11 +163,26 @@ router.get("/myproduct_json", function (req, res, next) {//用來向網頁發送
 
 
 router.delete("/myproduct", function (req, res, next) {
-  if (req.cookies.username) {
-    res.render("index", { title: req.cookies.username });
-  } else {
-    res.render("index", { title: "guest" });
-  }
+  console.log("收到delete請求");
+  console.log(req.query);
+  console.log("商品為"+req.query.Product_ID);
+  var sqlDelete=`DELETE FROM Uploaded_Product_Info WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID} `;
+
+   var delete_product=Users.prepare(sqlDelete);
+   delete_product.run();
+
+
+   var fileRead=fs.readdirSync(`./users/${req.cookies.certifiedUser}/${req.query.Product_ID}`);
+   console.log(fileRead);
+   console.log(fileRead.length);
+   for(var i=0;i<fileRead.length;i++){
+    fs.unlink(`./users/${req.cookies.certifiedUser}/${req.query.Product_ID}/${fileRead[i]}`,function(err){
+      console.log(err);
+    });
+   }
+   console.log('hhhhhhh');
+  res.end();
+   
 });
 
 

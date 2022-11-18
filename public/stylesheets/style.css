@@ -12,7 +12,7 @@ body {
 
 
 #header{
-  position: fixed;
+ 
   display:flex;
   flex-direction: row;
   background-color: purple;
@@ -21,11 +21,12 @@ body {
   z-index: 0;
 }
 #header #title{
+  top:10px;
   margin: 0px;
   border:0px;
-  font-size: 20px;
+  font-size: 30px;
   width:200px;
-  height:30px;
+  height:40px;
   display:flex;
   flex-direction: row;
   align-items: center;
@@ -42,20 +43,20 @@ body {
   display:flex;
   align-items:center;
   flex-direction: row;
+  border-width: 0px;
   
 }
 #header .users{
-  position:absolute;
   right:150px;
   display: flex;
   flex-direction: column;
-  width: 120px;
+  width: 300px;
   height:40px;
 }
 #header .users div{
   display: flex;
 flex-direction: row;
-font-size: 25px;
+font-size: 15px;
   
 }
 #header .users div::after{
@@ -85,6 +86,9 @@ width:10px;
 
 .normaltextlink{
   text-decoration: none;
+  color:black;
+}
+.normaltextlink:hover{
   color:black;
 }
 
@@ -159,14 +163,12 @@ a {
 
 .search_button{
   position: absolute;
-  top:5px;
-  width:30px;
-  Height:30px;
-  border:10px;
-  padding:0px;
-
+  background-color: white;
+  top:6.5px;
+  width:28px;
+  Height:27px;
+  border-color: white;
+  border: 0px;
+  padding:13px;
   border-left:30px;
-}
-.search_button:hover{
-  background-color: black;
 }

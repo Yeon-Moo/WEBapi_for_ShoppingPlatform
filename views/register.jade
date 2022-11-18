@@ -1,0 +1,51 @@
+extends layout 
+
+block content
+    h4
+      a(href='/') &#x56DE;&#x9996;&#x9801;
+    |     
+    h1 &#x8A3B;&#x518A;
+    |     
+    form(method='post', action='/users/register')
+      label(for='username')
+        | &#x5E33;&#x865F; 
+        span#username_hint(style='color:RED')
+      |  
+      br
+      |         
+      input#username(type='text', onchange='isallow()', name='username')
+      // name是提交表單後 伺服器收到資料名稱
+      br
+      |        
+      |         
+      label(for='password')
+        | &#x5BC6;&#x78BC; 
+        span#password_hint(style='color:RED')
+      br
+      |         
+      input#password(type='password', name='password', onchange='isallow()')
+      br
+      |         
+      label(for='email')
+        | &#x96FB;&#x5B50;&#x4FE1;&#x7BB1; 
+        span#email_hint(style='color:RED')
+      br
+      |         
+      input#email(type='email', onchange='isallow()', name='email')
+      br
+      |         
+      label(for='confirmPassword')
+        | &#x78BA;&#x8A8D;&#x5BC6;&#x78BC;  
+        span#confirmPassword_hint(style='color:RED')
+      br
+      |         
+      input#confirmPassword(type='password', onchange='isallow()', name='confirmPassword')
+      br
+      |         
+      input#async(type='button', value='async')
+      |         
+      input#Button(type='submit', value='submit')
+    |     
+    script(src='./../javascripts/register.js')
+    |     
+    script(src='./../javascripts/cookie.js')
