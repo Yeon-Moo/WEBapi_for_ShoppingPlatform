@@ -1,81 +1,26 @@
 
 $(document).ready(function(){
-
-    axios.get("/products/myproduct_json")
+    let getUrlString = location.href;
+    var url = new URL(getUrlString);
+    var Product_ID=url.searchParams.get('ID')
+    console.log(Product_ID);
+    axios.get(`/products/Product_json?ID=${Product_ID}`)
     .then(res=>{
-        var UAPInfo=res.data;
-        var UAP_Product_Info=UAPInfo.Product_Info;
-        var allImage=UAPInfo.Product_Image;
-        console.log(UAPInfo);
-
-    
-        if(UAPInfo.Product_Info.length){
-        for(var i=0;i<UAP_Product_Info.length;i++){
-            var firstDiv=document.querySelector(`.goods`);  
-            var contentDiv=document.createElement('div');
-            var ProductDiv=document.createElement('div');
-            var ImageDiv=document.createElement('img');
-            var ProductName_div=document.createElement('div');
-            var ProductPrice_div=document.createElement('div');
-            var Product=document.createElement('div');
-            var Product_link=document.createElement('a');
-            var first=document.createElement('p')
-            var img=document.createElement('img');
-            var ProductInfo_div=document.createElement('div');
-            var ProductPrice=document.createElement('div');
-            var delete_btn_div=document.createElement('div');
-            var delete_btn=document.createElement('button');
-            contentDiv.style="display:flex;flex-direction:row";
-            contentDiv.className="123";
-
-            
-            Product_link.style="text-decoration:none;color:black;";
-            ImageDiv.src=`./../img${UAP_Product_Info[i].Product_Image_Address}`;
-            ImageDiv.style="width:200px;Height:200px;";
-            ProductDiv.style="margin:1px;width:205px;display:flex;flex-direction:column;border:1px;border-style:solid;";
-            ProductName_div.innerHTML=UAP_Product_Info[i].Product_Name;//商品名稱
-            firstDiv.style=`display:flex;flex-direction:row;width:1300px;height:1000px;flex-wrap:wrap;align-content:flex-start`;
-            ProductPrice_div.style="display:flex;flex-direction:row;";
-            ProductPrice.style="width:80px;justify-content:center;"
-            ProductPrice.innerHTML=`$`+`${UAP_Product_Info[i].Product_Price} `;//商品價格
-            delete_btn.classList="delete btn btn-danger";
-            delete_btn.value=UAP_Product_Info[i].Upload_User_Product_ID;
-            
-            delete_btn.style="font-size:5px; padding-top:3px;padding-bottom:3px;"
-            delete_btn.innerHTML="刪除";
-            delete_btn_div.appendChild(delete_btn);
-            ProductPrice_div.appendChild(ProductPrice);
-            ProductPrice_div.appendChild(delete_btn_div);
-            
-            
-            ProductInfo_div.appendChild(ProductName_div);
-            ProductInfo_div.appendChild(ProductPrice_div);
-            ProductDiv.appendChild(ImageDiv);
-            ProductDiv.appendChild(ProductInfo_div);
-            Product_link.appendChild(ProductDiv);
-            Product.appendChild(Product_link);
-            contentDiv.appendChild(Product);
-            contentDiv.appendChild(Product);
-            firstDiv.appendChild(contentDiv);   
-        }
-        $('.delete').click(function(){
-            console.log(event.target.value);
-            console.log('hello');
-            axios.delete(`/products/myproduct?Product_ID=${event.target.value}`)
-            .then(res=>{
-                console.log('res finish');
-                location.replace('/products/myproduct');
-            })
-        
-        })
-       
-    }
-    else{
-        var firstDiv=document.querySelector(`.goods`);  
-        var text=document.createTextNode("目前沒有商品上架中");
-        firstDiv.appendChild(text);
-    }
-
+        console.log(res.data);
+        var Product=res.data;
+        var Product_Image=document.getElementById('Product_Image');
+        var Product_Name=document.getElementById('Product_Name');
+        var Product_Price=document.getElementById('Product_Price');
+        var Product_Discribtion=document.getElementById('Product_Discribtion');
+        var Product_Content=document.getElementById('Product_Content');
+        var Upload_User_Mall=document.getElementById('Upload_User_Mall');
+        Upload_User_Mall.href=`/products/mall?member=${Product.Upload_User_Name}`;
+        Upload_User_Mall.innerHTML=Product.Upload_User_Name;
+        Product_Discribtion.innerHTML=Product.Product_Discribtion;
+        Product_Content.innerHTML=Product.Product_Content;
+        Product_Image.src=`./img/${Product.Product_Image_Address}`;
+        Product_Image.style="width:500px;height:500px;"
+        Product_Name.innerHTML=Product.Product_Name;
+        Product_Price.innerHTML='$'+Product.Product_Price;
     })
-
 })
