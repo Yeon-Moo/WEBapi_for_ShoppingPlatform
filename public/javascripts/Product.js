@@ -11,12 +11,10 @@ $(document).ready(function(){
         var Product_Image=document.getElementById('Product_Image');
         var Product_Name=document.getElementById('Product_Name');
         var Product_Price=document.getElementById('Product_Price');
-        var Product_Discribtion=document.getElementById('Product_Discribtion');
         var Product_Content=document.getElementById('Product_Content');
         var Upload_User_Mall=document.getElementById('Upload_User_Mall');
         Upload_User_Mall.href=`/products/mall?member=${Product.Upload_User_Name}`;
         Upload_User_Mall.innerHTML=Product.Upload_User_Name;
-        Product_Discribtion.innerHTML=Product.Product_Discribtion;
         Product_Content.innerHTML=Product.Product_Content;
         Product_Image.src=`./img/${Product.Product_Image_Address}`;
         Product_Image.style="width:500px;height:500px;"

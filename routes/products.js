@@ -67,13 +67,11 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
     //var Productsearch=`SELECT * FROM  Uploaded_Product_Info WHERE ((Product_Name='${File.Product_Name}') AND (Upload_User_Name='${req.cookies.certifiedUser})')`;
     var sqlInsert = `INSERT INTO  Uploaded_Product_Info (
   "Product_Name",
-  "Product_Discribtion",
   "Product_Content",
   "Product_Price",
   "Product_Image_Address",
   "Upload_User_Name",
-  "Upload_User_ID",
-  "Upload_User_Product_ID") VALUES(?,?,?,?,?,?,?,?)`;
+  "Upload_User_Product_ID") VALUES(?,?,?,?,?,?)`;
 
     var UMPIDsearch = `SELECT Upload_User_Product_ID
   FROM Uploaded_Product_Info WHERE (Upload_User_Name='${req.cookies.certifiedUser}')`; //找出目前使用者已上傳商品中的最大值 (User_Product_ID)
@@ -95,12 +93,10 @@ router.post("/myproduct/upload",upload.array("Product_Image"),function (req, res
   
     dbinsert.run(
       File.Product_Name,//insert Product Name
-      File.Product_Discribtion,//insert Product Discribtion
       File.Product_Content,//insert Product Content
       File.Product_Price,//insert Product Price
       `/${req.cookies.certifiedUser}/${max + 1}/0.${ext}`,//insert Image Address
       req.cookies.certifiedUser,//insert the Username  Who is uploading now
-      UID,//insert the ID of the User is uploading 
       max + 1//insert the User's New Product ID
     );
 
