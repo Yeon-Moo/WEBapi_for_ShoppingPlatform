@@ -1,13 +1,15 @@
 
 $(document).ready(function(){
-    let myproduct_userhint=document.getElementById('myproduct_userhint');
-    myproduct_userhint.innerHTML='&nbsp &nbsp &nbsp &nbsp &nbsp'+getCookie('certifiedUser')+'的商品';
-    axios.get("/myproduct/json")
+    console.log('Hello');
+    let getUrlString = location.href;
+    var url = new URL(getUrlString);
+    var search_name=url.searchParams.get('productName')
+    axios.get(`/search/json?productName=${search_name}`)
     .then(res=>{
+        console.log(res.data);
         var UAPInfo=res.data;
         var UAP_Product_Info=UAPInfo.Product_Info;
-        var allImage=UAPInfo.Product_Image;
-        console.log(UAPInfo);
+      
 
     
         if(UAPInfo.Product_Info.length){
@@ -24,7 +26,6 @@ $(document).ready(function(){
             var ProductInfo_div=document.createElement('div');
             var ProductPrice=document.createElement('div');
             var delete_btn_div=document.createElement('div');
-            var delete_btn=document.createElement('button');
 
             contentDiv.style="display:flex;flex-direction:row";
             contentDiv.className="123";
@@ -39,12 +40,7 @@ $(document).ready(function(){
             ProductPrice_div.style="display:flex;flex-direction:row;";
             ProductPrice.style="width:80px;justify-content:center;"
             ProductPrice.innerHTML=`$`+`${UAP_Product_Info[i].Product_Price} `;//商品價格
-            delete_btn.classList="delete btn btn-danger";
-            delete_btn.value=UAP_Product_Info[i].Upload_User_Product_ID;
-            
-            delete_btn.style="font-size:5px; padding-top:3px;padding-bottom:3px;"
-            delete_btn.innerHTML="下架";
-            delete_btn_div.appendChild(delete_btn);
+        
             ProductPrice_div.appendChild(ProductPrice);
             ProductPrice_div.appendChild(delete_btn_div);
             
@@ -59,24 +55,16 @@ $(document).ready(function(){
             contentDiv.appendChild(Product);
             firstDiv.appendChild(contentDiv);   
         }
-        $('.delete').click(function(){
-            console.log(event.target.value);
-            console.log('hello');
-            axios.delete(`/myproduct?Product_ID=${event.target.value}`)
-            .then(res=>{
-                console.log('res finish');
-                location.replace('/myproduct');
-            })
-        
-        })
+       
        
     }
     else{
         var firstDiv=document.querySelector(`.goods`);  
-        var text=document.createTextNode("目前沒有商品上架中");
+        var text=document.createTextNode("找不到相同名字的商品。");
         firstDiv.appendChild(text);
     }
-
     })
+
+
 
 })

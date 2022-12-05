@@ -8,7 +8,6 @@ $(document).ready(function(){
     .then(res=>{
         var MAPInfo=res.data;
         var MAP_Product_Info=MAPInfo.Product_Info;
-        var allImage=MAPInfo.Product_Image;
         console.log(MAPInfo);
 
         console.log(MAP_Product_Info.length);
@@ -22,14 +21,12 @@ $(document).ready(function(){
             var ProductPrice_div=document.createElement('div');
             var Product=document.createElement('div');
             var Product_link=document.createElement('a');
-            var first=document.createElement('p')
-            var img=document.createElement('img');
             var ProductInfo_div=document.createElement('div');
             var ProductPrice=document.createElement('div');
-            var delete_btn_div=document.createElement('div');
+            let seller_name=document.getElementById('seller_name');
             contentDiv.style="display:flex;flex-direction:row";
             contentDiv.className="123";
-
+            seller_name.innerHTML='&nbsp &nbsp &nbsp &nbsp &nbsp'+Upload_User_Name+'的商品';
             Product_link.href=`/products?ID=${MAP_Product_Info[i].Product_ID}`;
             Product_link.style="text-decoration:none;color:black;";
             ImageDiv.src=`./../img${MAP_Product_Info[i].Product_Image_Address}`;

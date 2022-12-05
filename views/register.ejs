@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Yeon's Shop</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <script src="/javascripts/font-awesome.js"></script>
+    <script src="/javascripts/axios.min.js"></script>
+    <script src="/javascripts/jquery.js"> </script>
+  </head>
+  <body>
+    <div>
+      <div id="header">
+        <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
+        <div id="search"> 
+          <form action="/products" method="get"> 
+            <div class="searchinput">
+              <div>
+                <input type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;width:700px;z-index:-1;">
+              </div>
+              <div style="width:25px;height:35px;">
+                <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="users"> 
+          <div> <a href="/users/login" class="user_a">登入</a></div>
+          <div> <a href="/users/register" class="user_a">註冊     </a></div>
+        </div>
+      </div><br><br>
+    </div>
+    <h4><a href="/">&#x56DE;&#x9996;&#x9801;</a></h4>    
+    <h1>&#x8A3B;&#x518A;</h1>    
+    <form method="post" action="/users/register">
+      <label for="username">&#x5E33;&#x865F; <span id="username_hint" style="color:RED"></span></label> <br>        
+      <input id="username" type="text" onchange="isallow()" name="username">
+      <!-- name是提交表單後 伺服器收到資料名稱--><br>       
+              
+      <label for="password">&#x5BC6;&#x78BC; <span id="password_hint" style="color:RED"></span></label><br>        
+      <input id="password" type="password" name="password" onchange="isallow()"><br>        
+      <label for="email">&#x96FB;&#x5B50;&#x4FE1;&#x7BB1; <span id="email_hint" style="color:RED"></span></label><br>        
+      <input id="email" type="email" onchange="isallow()" name="email"><br>        
+      <label for="confirmPassword">&#x78BA;&#x8A8D;&#x5BC6;&#x78BC;  <span id="confirmPassword_hint" style="color:RED"></span></label><br>        
+      <input id="confirmPassword" type="password" onchange="isallow()" name="confirmPassword"><br>        
+      <input id="async" type="button" value="async">        
+      <input id="Button" type="submit" value="submit">
+    </form>    
+    <script src="./../javascripts/register.js"></script>    
+    <script src="./../javascripts/cookie.js"></script>
+  </body>
+</html>

@@ -10,6 +10,11 @@ var bodyParser = require('body-parser');
 
 
 var page_login=function(req,res){
+  if (req.cookies.certifiedUser) {
+    res.setHeader("Content-Type","text/html");
+    res.send(`<script>alert('您已經登入過了');
+    location.href='/'</script>`);
+  }
   res.render('login');
 }
 
@@ -73,7 +78,7 @@ router.post('/login', function(req, res, next) {//上傳登入資料
       location.href='/users/login'</script>`);
   }else{
     if(password==row[0].password){
-      res.cookie('certifiedUser',username,{path:'/',httpOnly:true,maxAge:6000000000});
+      res.cookie('certifiedUser',username,{path:'/',maxAge:6000000000});
       console.log("give cookie");
       return res.redirect('/');
     }else{          //若於資料庫內的帳號 與密碼不匹配 網頁就跳出警告視窗

@@ -8,11 +8,13 @@ $(document).ready(function(){
     .then(res=>{
         console.log(res.data);
         var Product=res.data;
+        var page_title=document.getElementById('page_title');
         var Product_Image=document.getElementById('Product_Image');
         var Product_Name=document.getElementById('Product_Name');
         var Product_Price=document.getElementById('Product_Price');
         var Product_Content=document.getElementById('Product_Content');
         var Upload_User_Mall=document.getElementById('Upload_User_Mall');
+        page_title.innerHTML=`${Product.Product_Name} | Yeon's Shop`;
         Upload_User_Mall.href=`/products/mall?member=${Product.Upload_User_Name}`;
         Upload_User_Mall.innerHTML=Product.Upload_User_Name;
         Product_Content.innerHTML=Product.Product_Content;

@@ -92,9 +92,6 @@ width:10px;
   color:black;
 }
 
-a {
-  color: #00B7FF;
-}
 #upload_product::before{
   content: " ";
   height: 40px;
