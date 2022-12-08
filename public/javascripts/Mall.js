@@ -13,6 +13,8 @@ $(document).ready(function(){
         console.log(MAP_Product_Info.length);
         if(MAPInfo.Product_Info.length){
         for(var i=0;i<MAP_Product_Info.length;i++){
+            let Mall_name=document.getElementById("Mall");
+            Mall_name.value=Upload_User_Name;
             var firstDiv=document.querySelector(`.goods`);  
             var contentDiv=document.createElement('div');
             var ProductDiv=document.createElement('div');

@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var ProductRouter = require('./routes/products');
 var myProductRouter = require('./routes/myproduct');
 const searchRouter=require('./routes/search')
+const CommentRouter=require('./routes/Comment')
 var app = express();
 
 // view engine setup
@@ -20,6 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+app.use('/Comment', CommentRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', ProductRouter);

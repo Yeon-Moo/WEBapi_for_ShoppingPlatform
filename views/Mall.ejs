@@ -35,11 +35,15 @@
         <div class="goods"> </div>
         <div style="display:flex;flex-direction:column;width:200px;height:200px;">
           <div>
-            <label for="search_product">請輸入欲搜尋商品</label>
-            <input id="search_product" type="text">
-            <br>
-            <br>
-            <button style="position:relative;width:70px;height:50px;" onclick='/search/myproduct' class="btn btn-success">搜尋</button>
+            <form method="get" action="/search">
+              <label for="search_product">請輸入欲搜尋商品</label>
+              <input id="search_product" name="productName" type="text">
+              <input name="Mall" id="Mall"  type="hidden">
+              <br>
+              <br>
+              <button style="position:relative;width:70px;height:50px;" onclick='/search/myproduct' class="btn btn-success">搜尋</button>
+            </form>
+           
           </div>
         </div>
         <script src="/javascripts/Mall.js"> </script>
