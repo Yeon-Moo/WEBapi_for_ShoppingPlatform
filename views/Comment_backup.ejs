@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="http://localhost:3000/stylesheets/boot.css">
+        <title>評論管理</title>
+    </head>
+    <body> 
+        <script>var a = 0;</script> 
+        <!-- <a href="test_upload.html">123</a> -->
+        <div class="container" >
+            <h1 class="text-center mt-3 mb-3"><%= title %></h1>
+            
+            <% if(action == 'add') { %>
+                
+            <div class="card">
+                <div class="card-header">
+
+                    <div class="ds_history">
+                        <script>
+                            document.getElementById('histort_content_add').style.display = 'none';
+                        </script>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/sample_data/add_sample_data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>使用者</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>留言內容</label>
+                                    <input type="text" name="age" id="age" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" name="submit_button" class="btn btn-primary" value="新增留言"
+                            onclick="
+                                var content =  document.getElementById('age').value;
+                                if(content.length > 30){
+                                    document.getElementById('age').value = '';
+                                    alert('字數限制30字');
+
+                                }
+                            "
+                            />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <% } else if(action == 'edit') { %>
+            <div class="card">
+                <div class="card-header">
+                    <div class="ds_history">
+                        <script>
+                            document.getElementById('histort_content_add').style.display = 'none';
+                        </script>
+                    </div>
+
+
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/sample_data/edit/<%= sampleData.id %>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>使用者</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" value="<%= sampleData.name %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>留言內容</label>
+                                    <input type="text" name="age" id="age" class="form-control" value="<%= sampleData.content %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" name="submit_button" class="btn btn-primary" value="修改"
+                                onclick="
+                                var content =  document.getElementById('age').value;
+                                if(content.length > 30){
+                                    document.getElementById('age').value = '';
+                                    alert('字數限制30字');
+
+                                }
+                                "
+                            />
+                        </div>
+                    </form>
+                    <script>
+                    document.getElementById('gender').value="<%= sampleData.gender %>";
+                    </script>
+                </div>
+            </div>
+            <% } else { %>
+                
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <!-- Sample Data -->
+                            <div class="histort_content" >
+                                <!-- <script>var a = 0;</script>  -->
+                                <button id="histort_content_display_btn" type="submit" onclick="
+                                if(a%2 == 0){
+                                    document.getElementById('history_content_ds').style.display = 'block';
+                                    a ++;
+                                }
+                                else{
+                                    document.getElementById('history_content_ds').style.display = 'none';
+                                    a ++;
+                                };" style="background-color: rgb(134, 27, 192) ;color: antiquewhite;border-radius: 5px;">歷史評論</button>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <a href="/sample_data/add" class="btn btn-success btn-sm float-end">新增留言</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="display: none;" id="history_content_ds">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>使用者</th>
+                                <th>留言日期</th>
+                                <th>留言內容</th>
+                                <!-- <th>Gender</th> -->
+                                <th>Action</th>
+                            </tr>
+                            <%
+                            if(sampleData.length > 0)
+                            {
+                                sampleData.forEach(function(data){
+                            %>
+                            <tr>
+                                <td><%= data.name %></td>
+                                <td><%= data.date %></td>
+                                <td><%= data.content %></td>
+                                <!-- <td><%= data.gender %></td> -->
+                                <td>
+                                    <a href="/sample_data/edit/<%= data.id %>" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="/sample_data/delete/<%= data.id %>" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            <%
+                                });
+                            }
+                            else
+                            {
+                            %>
+                            <tr>
+                                <td colspan="5">No Data Found</td>
+                            </tr>
+                            <%
+                            }
+                            %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <% } %>
+
+        </div> 
+
+    </body>
+</html>

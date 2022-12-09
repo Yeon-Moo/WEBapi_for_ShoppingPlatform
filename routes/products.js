@@ -6,7 +6,7 @@ const Users = new database("./database/userfile.db");
 var bodyParser = require("body-parser");
 const multer = require("multer");
 var cookieParser = require("cookie-parser");
-
+const { json } = require("express");
 
 router.get("/", function (req, res, next) {
   console.log(req.cookies.certifiedUser);

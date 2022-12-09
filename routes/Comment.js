@@ -1,181 +1,110 @@
-const express = require('express');
-const app = express();
-const sqlite3 = require('sqlite3').verbose();
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const fs = require("fs");
+const database = require("better-sqlite3"); //同步版的sqlite3
+const Users = new database("./database/userfile.db");
+var bodyParser = require("body-parser");
+const multer = require("multer");
+var cookieParser = require("cookie-parser");
+const { json } = require("express");
 
 
 
-//Connecting to local DataBase
-var db = new sqlite3.Database("./database/userfile.db");
 
-router.get("/", function(request, response, next){
 
-	var query = "SELECT * FROM sample_data WHERE Product_ID ORDER BY date DESC";
-	console.log("DataBase Connected");
+router.get("/", function (request, response, next) {
+console.log(request.query.productID);
+  response.render("Comment");
+});
 
-	db.serialize(function(){
-		db.all(query, function(error, data){
+router.get("/json", function (req, res, next) {
+
+	var productID=req.query.productID;
+	var UAPsearch = `SELECT * FROM Comment WHERE Product_ID=${productID} ORDER BY Date DESC`; //User All Product search
+	var UAP_prepare=Users.prepare(UAPsearch);
+	var historyComment=UAP_prepare.all();
+	fs.readFile('./public/json/Comment_Info.json',function(err,CommentInfo){
+		if(err)console.log(err);
+		var Comment=CommentInfo.toString(); //將二進制數據轉回字串
+		Comment=JSON.parse(Comment);
+		for(var i=0;i<historyComment.length;i++){
+		  Comment.Comment.push(historyComment[i]);
+		}
+		Comment.total=historyComment.length;
+		console.log(Comment);
+		res.json(Comment);
 	
-			if(error)
-			{
-				throw error; 
-			}
-			else
-			{
-				response.render('Comment', {title:'留言評論', action:'list', sampleData:data});
-			}
+	  })
 
-		});
 
 	});
 	
+	// fs.readFile('./public/json/Comment_Info.json',function(err,CommentInfo){
+	// 	if(err)console.log(err);
+	// 	var Comment=CommentInfo.toString(); //將二進制數據轉回字串
+	// 	Comment=JSON.parse(Comment);
+	// 	for(var i=0;i<historyComment.length;i++){
+	// 	  Comment.Comment.push(historyComment[i]);
+	// 	}
+	// 	Comment.total=historyComment.length;
+	// 	console.log(Comment);
+	// 	res.json(Comment);
+	
+	//   })
+
+
+router.get("/add", function (request, response, next) {
+  response.render("add_Comment");
+});
+
+router.post("/add", function (req, res, next) {
+  let dt = new Date();
+  let month=dt.getMonth()+1;
+  if(month>12){
+	month=month-12;
+  }
+  let format_time=dt.getFullYear()+'/'+month+'/'+dt.getDate()+' '+dt.getHours()+':'+dt.getMinutes()+':'+dt.getSeconds();
+  console.log(format_time);
+
+  console.log(req.body);
+  let Comment=req.body.add_Comment_Content;
+  let gender=req.body.gender;
+  let productID=req.body.productID;
+
+  let sqlInsert = `INSERT INTO  Comment (
+	"User_Name",
+	"Date",
+	"Content",
+	"Gender",
+	"Product_ID") VALUES(?,?,?,?,?)`;
+
+let commentInsert=Users.prepare(sqlInsert).run(
+	req.cookies.certifiedUser,
+	format_time,
+	Comment,
+	gender,
+	productID);
+  res.redirect(`/Comment?productID=${[productID]}`);
 
 });
 
 
+router.get("/delete/:id", function (request, response, next) {
+  var id = request.params.id;
 
-
-router.get("/add", function(request, response, next){
-	response.render("add_Comment");
-
-});
-
-router.post("/add_sample_data", function(request, response, next){
-
-	let dt = new Date();
-
-	var name = request.body.first_name;
-
-	// var last_name = request.body.last_name;
-	var date = dt.getFullYear().toString() + "/" + dt.getMonth().toString() + "/" + dt.getDate().toString();
-
-	var content = request.body.age;
-
-	var gender = request.body.gender;
-
-	if(content == '') response.redirect("/sample_data/add");
-	else{
-		db.serialize(function(){
-			var query = `SELECT id FROM sample_data`;
-	
-			db.all(query, function(error, data){
-				console.log(data[data.length-1].id,data.length);
-				var register_str = data[data.length-1].id;
-				var count_id = parseInt(register_str) +1;
-				var id = count_id;
-				var query2 = `
-				INSERT INTO sample_data 
-				(id,name, date, content, gender) 
-				VALUES ("${id}","${name}", "${date}", "${content}", "${gender}")
-				`;
-				if(error)
-				{
-					throw error; 
-				}
-				else
-				{
-					db.run(query2, function(error, data){
-		
-						if(error)
-						{
-							throw error; 
-						}
-						else
-						{
-							response.redirect("/sample_data");
-						}
-			
-					});
-				}
-	
-			});
-	
-		});
-	}
-	
-
-	
-
-});
-
-router.get('/edit', function(request, response, next){
-console.log("hellot");
-response.render("edit_Comment");
-
-});
-
-router.post('/edit/:id', function(request, response, next){
-
-	let dt = new Date();
-	
-
-	var id = request.params.id;
-
-	var name = request.body.first_name;
-
-	var date = dt.getFullYear().toString() + "/" + dt.getMonth().toString() + "/" + dt.getDate().toString();
-
-	var content = request.body.age;
-
-	var gender = request.body.gender;
-
-
-	var query = `
-	UPDATE sample_data 
-	SET name = "${name}", 
-	date = "${date}", 
-	content = "${content}", 
-	gender = "${gender}" 
-	WHERE id = "${id}"
-	`;
-
-	if(content == '') response.redirect(`/sample_data/edit/${id}`);
-	else{
-		db.serialize(function(){
-			db.run(query, function(error, data){
-		
-				if(error)
-				{
-					throw error; 
-				}
-				else
-				{
-					response.redirect('/sample_data');
-				}
-	
-			});
-	
-		});
-	}
-
-
-});
-
-router.get('/delete/:id', function(request, response, next){
-
-	var id = request.params.id; 
-
-	var query = `
+  var query = `
 	DELETE FROM sample_data WHERE id = "${id}"
 	`;
 
-	db.serialize(function(){
-		db.run(query, function(error, data){
-	
-			if(error)
-			{
-				throw error; 
-			}
-			else
-			{
-				response.redirect('/sample_data');
-			}
-
-		});
-
-	});
-
-
+  db.serialize(function () {
+    db.run(query, function (error, data) {
+      if (error) {
+        throw error;
+      } else {
+        response.redirect("/sample_data");
+      }
+    });
+  });
 });
 
 module.exports = router;

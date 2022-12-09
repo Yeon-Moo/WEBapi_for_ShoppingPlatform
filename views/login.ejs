@@ -9,26 +9,29 @@
     <script src="/javascripts/jquery.js"> </script>
   </head>
   <body>
-    <div>
-      <div id="header">
-        <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
-        <div id="search"> 
-          <form action="/search" method="get"> 
-            <div class="searchinput">
-              <div>
-                <input type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;width:700px;z-index:-1;">
-              </div>
-              <div style="width:25px;height:35px;">
-                <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
-              </div>
+    <div id="header">
+      <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
+      <div id="search"> 
+        <form action="/search" method="get"> 
+          <div class="searchinput">
+            <div>
+              <input type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;width:700px;z-index:-1;">
             </div>
-          </form>
-        </div>
-        <div class="users"> 
-          <div> <a href="/users/login" class="user_a">登入</a></div>
-          <div> <a href="/users/register" class="user_a">註冊     </a></div>
-        </div>
-      </div><br><br>
+            <div style="width:25px;height:35px;">
+              <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="users" id="user"> 
+        <div> <a href="/users/login" class="user_a">登入</a></div>
+        <div> <a href="/users/register" class="user_a">註冊     </a></div>
+      </div>
+     
+    </div><br><br>
+    <div><h4 id="myproduct_userhint"></h4></div>
+    <script src="/javascripts/cookie.js"></script>
+    <div>
       <div style="display:flex;justify-content:center">
         <div style="b:solid;position:relative;height:400px;top:100px;">
           <h1>Login   </h1>

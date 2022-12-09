@@ -4,7 +4,7 @@ const fs = require("fs");
 const database = require("better-sqlite3"); //同步版的sqlite3
 const Users = new database("./database/userfile.db");
 var bodyParser = require("body-parser");
-
+const { json } = require("express");
 var cookieParser = require("cookie-parser");
 
 let search= function(productName){

@@ -4,6 +4,7 @@ $(document).ready(function(){
     var url = new URL(getUrlString);
     var Product_ID=url.searchParams.get('ID')
     console.log(Product_ID);
+    document.getElementById('productID').value=Product_ID;
     axios.get(`/products/Product_json?ID=${Product_ID}`)
     .then(res=>{
         console.log(res.data);

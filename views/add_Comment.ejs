@@ -5,57 +5,78 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet"
-            href="http://localhost:3000/stylesheets/boot.css">
+
+
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <script src="/javascripts/font-awesome.js"></script>
+        <script src="/javascripts/axios.min.js"></script>
+        <script src="/javascripts/jquery.js"> </script>
         <title>評論管理</title>
     </head>
     <body>
-    <h1>新增評論</h1>
+        <div id="header">
+            <div id="title"> <a href="/" class="normaltextlink"><span
+                        style="color:aqua">Yeon's </span>Shop </a></div>
+            <div id="search">
+                <form action="/search" method="get">
+                    <div class="searchinput">
+                        <div>
+                            <input type="text" placeholder="請輸入欲搜尋商品"
+                                name="productName"
+                                style="border:0px;height:25px;width:700px;z-index:-1;">
+                        </div>
+                        <div style="width:25px;height:35px;">
+                            <button type="submit"
+                                style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;"
+                                class="btn btn-primary"><i class="fas
+                                    fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="users" id="user">
+                <div> <a href="/users/login" class="user_a">登入</a></div>
+                <div> <a href="/users/register" class="user_a">註冊 </a></div>
+            </div>
+            <script src="/javascripts/cookie.js"></script>
+        </div>
+        <h1 id="title_add_Comment">新增評論</h1>
         <div class="card">
             <div class="card-header">
 
                 <div class="ds_history">
-                    <script>
-                document.getElementById('histort_content_add').style.display = 'none';
-            </script>
+
                 </div>
 
             </div>
             <div class="card-body">
-                <form method="POST" action="/sample_data/add_sample_data">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>使用者</label>
-                                <input type="text" name="first_name"
-                                    id="first_name" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
+                <form method="POST" action="/comment/add">
+                    <input type="hidden" name="productID" id="productID" value="">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label>留言內容</label>
-                                <input type="text" name="age" id="age"
-                                    class="form-control" />
+                                <input type="text" name="add_Comment_Content" id="add_Comment_Content"class="form-control" />
                             </div>
+                        </div>
+                        <div>
+                            <label for="gender">性別：</label>
+                            <select id="gender" method="POST" action="/comment/add" name="gender">
+                                <option value="" >請選擇性別</option>
+                                <option value="man">男</option>
+                                <option value="woman">女</option>
+                                <option value="notDisclose">不透露</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <input type="submit" name="submit_button" class="btn
-                            btn-primary" value="新增留言"
-                            onclick="
-                            var content= document.getElementById('age').value;
-                            if(content.length> 30){
-                        document.getElementById('age').value = '';
-                        alert('字數限制30字');
-
-                        }
-                        "
-                        />
+                       <button type="submit" class="btn btn-primary">新增留言</button>
                     </div>
                 </form>
             </div>
+            <script src="/javascripts/add_Comment.js"></script>
         </div>
+        
     </body>
 </html>
