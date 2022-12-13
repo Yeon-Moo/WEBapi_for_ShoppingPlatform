@@ -28,7 +28,7 @@
           <div> <a href="/users/login" class="user_a">登入</a></div>
           <div> <a href="/users/register" class="user_a">註冊     </a></div>
         </div>
-       
+        <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
       </div><br><br>
       <div><h4 id="myproduct_userhint"></h4></div>
       <script src="/javascripts/cookie.js"></script>
@@ -38,6 +38,9 @@
         <div style="display:flex;flex-direction:column;width:200px;height:200px;">
           <div>
             <button style="position:relative;width:70px;height:50px;" onclick="location.href=`./myproduct/upload`" class="btn btn-info">上架</button>
+          </div>
+          <div>
+            <button style="position:relative;width:70px;height:50px;" onclick="location.href=`./myproduct/sellerOrder`" class="btn btn-info">我收到的訂單</button>
           </div>
           <div></div>
         </div>

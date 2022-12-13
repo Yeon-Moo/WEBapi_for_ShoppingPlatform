@@ -24,11 +24,13 @@
             </div>
           </form>
         </div>
-        <div class="users"> 
+        <div class="users" id="user"> 
           <div> <a href="/users/login" class="user_a">登入</a></div>
           <div> <a href="/users/register" class="user_a">註冊     </a></div>
         </div>
+        <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
       </div><br><br>
+      <script src="/javascripts/cookie.js"></script>
       <div id="upload_product">
         <div>
           <form action="/myproduct/upload" method="POST" enctype="multipart/form-data"> 
@@ -58,8 +60,12 @@
               </div>
               <div class="upload_input1">
                 <div>
-                  <button type="submit" name="Product_Submit_Button" id="Product_Submit_Button">上架</button>
+                  <button type="submit" name="Product_Submit_Button" id="Product_Submit_Button" disabled=false>上架</button>
                 </div>
+                <div>
+                 <span id="picture_hint"> &nbsp &nbsp 請上傳一張圖片</span>
+                </div>
+           
               </div>
               <div class="upload_input1">
                 <div style="display:flex;flex-direction:row;" id="Upload_Img_Preview_div"></div>

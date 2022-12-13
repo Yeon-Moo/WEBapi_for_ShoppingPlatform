@@ -1,5 +1,4 @@
 
-const Async_Btn=document.getElementById("async");
 const userName=document.getElementById("username");
 const Hint_userName=document.getElementById("username_hint");
 const Password=document.getElementById("password");
@@ -42,6 +41,7 @@ function isallow(){
         Hint_userName.innerHTML="";
         Hint_Email.innerHTML="";
         Button.disabled=false;
+
         }
     }
 

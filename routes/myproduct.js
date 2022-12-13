@@ -14,6 +14,7 @@ const { json } = require("express");
 
 
 
+
 //上傳商品區
 fs.mkdir(`./upload`, { recursive: true }, (err) => {
   if (err) throw err;
@@ -152,7 +153,6 @@ router.get("/json", function (req, res, next) {//用來向網頁發送json
       Product.Product_Info.push(UAP[i]);
     }
     Product.total=UAP.length;
-    console.log(Product);
     res.json(Product);
 
   })
@@ -161,26 +161,36 @@ router.get("/json", function (req, res, next) {//用來向網頁發送json
 
 
 router.delete("/", function (req, res, next) {
-  console.log("收到delete請求");
-  console.log(req.query);
-  console.log("商品為"+req.query.Product_ID);
-  var sqlDelete=`DELETE FROM Uploaded_Product_Info WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID} `;
+ console.log(req.query);
 
-   var delete_product=Users.prepare(sqlDelete);
-   delete_product.run();
+ var IDsearch=`SELECT Product_ID FROM Uploaded_Product_Info 
+ WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID}`;
+  var IDsearchRun=Users.prepare(IDsearch).all();
+  Product_ID=IDsearchRun[0].Product_ID;
+  console.log(Product_ID);
+ var commentDelete=`DELETE FROM Comment WHERE Product_ID=${Product_ID}`;
 
+ var sqlDelete=`DELETE FROM Uploaded_Product_Info WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID} `;
+ 
 
+ var delete_Comment=Users.prepare(commentDelete).run();//下架商品同時 刪除評論以確保資料庫不會被廢棄資料佔據
+ var delete_product=Users.prepare(sqlDelete).run();
    var fileRead=fs.readdirSync(`./users/${req.cookies.certifiedUser}/${req.query.Product_ID}`);
-   console.log(fileRead);
-   console.log(fileRead.length);
+
    for(var i=0;i<fileRead.length;i++){
     fs.unlink(`./users/${req.cookies.certifiedUser}/${req.query.Product_ID}/${fileRead[i]}`,function(err){
       console.log(err);
     });
    }
-   console.log('hhhhhhh');
   res.end();
    
 });
+
+
+router.get("/sellerOrder", function (req, res, next) {
+res.end();
+});
+
+
 
 module.exports = router;

@@ -9,6 +9,7 @@ var ProductRouter = require('./routes/products');
 var myProductRouter = require('./routes/myproduct');
 const searchRouter=require('./routes/search')
 const CommentRouter=require('./routes/Comment')
+const cartRouter=require('./routes/Cart')
 var app = express();
 
 // view engine setup
@@ -29,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/products', ProductRouter);
 app.use('/myproduct', myProductRouter);
 app.use('/search',searchRouter);
+app.use('/Cart',cartRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -42,7 +44,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.redirect('/');
 });
 
 module.exports = app;

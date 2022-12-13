@@ -11,7 +11,7 @@
         <script src="/javascripts/font-awesome.js"></script>
         <script src="/javascripts/axios.min.js"></script>
         <script src="/javascripts/jquery.js"> </script>
-        <title>評論管理</title>
+        <title id="Website_title">評論管理</title>
     </head>
     <body>
         <div id="header">
@@ -38,6 +38,7 @@
                 <div> <a href="/users/login" class="user_a">登入</a></div>
                 <div> <a href="/users/register" class="user_a">註冊 </a></div>
             </div>
+            <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
             <script src="/javascripts/cookie.js"></script>
         </div>
         <div class="card">
@@ -67,7 +68,7 @@
 
             <div class="card-body" 
                 id="history_content_ds">
-                <div class="table-responsive">
+                <div class="table-responsive" id="Comment_table">
                     <table class="table table-bordered" id="History_Content">
                         <tr>
                             <th>使用者</th>

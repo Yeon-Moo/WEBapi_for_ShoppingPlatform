@@ -1,8 +1,24 @@
 
+let getUrlString = location.href;
+var url = new URL(getUrlString);
+var Product_ID=url.searchParams.get('ID')
+
+function getCookie(cookiename) {
+    const strcookie = document.cookie;
+    const cookieList=strcookie.split(";");
+    for( let i=0;i<cookieList.length;i++){
+        const arr=cookieList[i].split('=');
+        if(cookiename===arr[0].trim()){
+            return arr[1];
+        }
+    }
+    }
+
+
+
 $(document).ready(function(){
-    let getUrlString = location.href;
-    var url = new URL(getUrlString);
-    var Product_ID=url.searchParams.get('ID')
+
+    document.getElementById('Amount').value=1;
     console.log(Product_ID);
     document.getElementById('productID').value=Product_ID;
     axios.get(`/products/Product_json?ID=${Product_ID}`)
@@ -20,8 +36,32 @@ $(document).ready(function(){
         Upload_User_Mall.innerHTML=Product.Upload_User_Name;
         Product_Content.innerHTML=Product.Product_Content;
         Product_Image.src=`./img/${Product.Product_Image_Address}`;
-        Product_Image.style="width:500px;height:500px;"
+        Product_Image.style="width:400px;height:500px;"
         Product_Name.innerHTML=Product.Product_Name;
         Product_Price.innerHTML='$'+Product.Product_Price;
+
+        $('#Cart_add').click(function(){
+
+            axios.post('/Cart',{
+                Product_ID:Product_ID,
+                Buyer:getCookie("certifiedUser"),
+                Amount:document.getElementById('Amount').value,
+                Seller:Product.Upload_User_Name
+            })
+            .then(res=>{    
+                toastr.options.positionClass="toast-top-center";
+                toastr.success("已將商品加入購物車!");
+            })
+        
+            
+        
+        
+        })
+        
+
+
     })
 })
+
+
+

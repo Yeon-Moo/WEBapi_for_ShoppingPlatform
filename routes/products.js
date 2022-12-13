@@ -10,7 +10,7 @@ const { json } = require("express");
 
 router.get("/", function (req, res, next) {
   console.log(req.cookies.certifiedUser);
-  res.render('Product',{username: req.cookies.certifiedUser});
+  res.render('Product');
 });
 
 router.get("/Product_json", function (req, res, next) {

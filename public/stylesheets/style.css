@@ -3,6 +3,7 @@ body {
   border:0px;
   display:flex;
   flex-direction: column;
+  background-color: #f5f5f5!important;
 }
 
 #header::before{
@@ -50,7 +51,7 @@ body {
   right:150px;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 70px;
   height:40px;
 }
 #header .users div{
@@ -174,3 +175,21 @@ width:10px;
   color:whitesmoke;
   text-decoration: none;
 }
+
+.productPageGood{
+  display: flex;
+  align-items: center;
+}
+
+.ul_Product{
+  list-style-type:none;
+}
+
+#myCart{
+  position: relative;
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  top:-1.5px;
+}
+
