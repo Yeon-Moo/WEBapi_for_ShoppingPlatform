@@ -130,6 +130,12 @@ $('#goCheckout').click(function(){
 
 })
 
+$('#myOrder').click(function(){
+
+    window.location.href='/Cart/myOrder';
+
+})
+
 
 
 
