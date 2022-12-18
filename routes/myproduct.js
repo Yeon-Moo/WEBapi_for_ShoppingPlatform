@@ -10,7 +10,13 @@ const { json } = require("express");
 
 
 
-
+function readHtml(Htmlname, req, res) {
+  fs.readFile(`./public/html/` + Htmlname + `.html`, function (err, data) {
+    if (err) console.log(err);
+    res.setHeader("Content-Type", "text/html");
+    res.send(data);
+  });
+}
 
 
 
@@ -50,7 +56,7 @@ router.get("/upload", function (req, res, next) {
     res.send(`<script>alert('您必須先登入才能上傳商品');
                         location.href='/'</script>`);
   } else {
-    res.render("Upload_Product" , { username: req.cookies.certifiedUser });
+    readHtml("Upload_Product",req,res);
   }
 });
 
@@ -121,7 +127,7 @@ router.post("/upload",upload.array("Product_Image"),function (req, res, next) {
 
 router.get("/", function (req, res, next) {
     if (req.cookies.certifiedUser) {
-      res.render("MyProducts");
+      readHtml("MyProducts",req,res);
     } else {
       res.setHeader("Content-Type","text/html");
       res.send(`<script>alert('請先登入才能瀏覽我的商品區');
@@ -187,10 +193,33 @@ router.delete("/", function (req, res, next) {
 });
 
 
-router.get("/sellerOrder", function (req, res, next) {
-res.end();
+router.get("/SellerOrder", function (req, res, next) {
+  readHtml("SellerOrder", req, res);
 });
 
+router.get("/SellerOrder/json", function (req, res, next) {
+  console.log(req.query);
+  Seller=req.query.Seller;
+  let OrderSearch ="SELECT * FROM `Order` WHERE Seller=?";
+  let Order = Users.prepare(OrderSearch).all(`${Seller}`);
+
+  for(let i =0; i<Order.length;i++){
+    let Product_Info=new Array();
+    Order[i].Product_ID=JSON.parse(Order[i].Product_ID)
+    Order[i].Amount=JSON.parse(Order[i].Amount);
+    Order[i].Price=JSON.parse(Order[i].Price);
+    for(let j=0;j<Order[i].Product_ID.length;j++){
+      let ProductSearch=`SELECT * FROM Uploaded_Product_Info WHERE Product_ID=${Order[i].Product_ID[j]}`
+      let Product=Users.prepare(ProductSearch).all();
+     Product_Info.push(Product);
+    
+    }
+ 
+ Order[i].Product_Info=Product_Info;
+  }
+
+  res.json(Order);
+});
 
 
 module.exports = router;

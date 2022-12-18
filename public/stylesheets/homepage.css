@@ -113,6 +113,7 @@
 .today1{
     /*border: 2px solid rgb(0, 0, 0);
     border-radius: 5px;*/
+
     height: 50%;
     flex: 1;
 }
@@ -125,6 +126,7 @@
 .today3{
     /* border: 2px solid rgb(0, 0, 0);
     border-radius: 5px; */
+  
     height: 50%;
     flex: 1;
 }

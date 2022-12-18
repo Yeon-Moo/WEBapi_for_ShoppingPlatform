@@ -8,9 +8,22 @@ const multer = require("multer");
 var cookieParser = require("cookie-parser");
 const { json } = require("express");
 
+
+
+
+function readHtml(Htmlname, req, res) {
+	fs.readFile(`./public/html/` + Htmlname + `.html`, function (err, data) {
+	  if (err) console.log(err);
+	  res.setHeader("Content-Type", "text/html");
+	  res.send(data);
+	});
+  }
+
+
+
 router.get("/", function (req, res, next) {
   console.log(req.cookies.certifiedUser);
-  res.render('Product');
+  readHtml('Product',req,res);
 });
 
 router.get("/Product_json", function (req, res, next) {
@@ -26,11 +39,7 @@ router.get("/Product_json", function (req, res, next) {
 router.get("/mall", function (req, res, next) {//買家可看到賣家在販賣什麼商品
   var Mall_User=req.query.member;
   console.log(Mall_User);
-  if (req.cookies.certifiedUser) {
-    res.render("Mall", { username: req.cookies.certifiedUser});
-  } else {
-    res.render("Mall", { username: "guest" });
-  }
+  readHtml("Mall",req,res);
 });
 
 router.get("/mall_json", function (req, res, next) {//把資料庫的資料傳送到mall

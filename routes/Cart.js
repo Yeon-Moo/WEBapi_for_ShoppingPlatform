@@ -230,18 +230,21 @@ router.get("/myOrder/json", function (req, res, next) {
   for(let i =0; i<Order.length;i++){
     let Product_Info=new Array();
     Order[i].Product_ID=JSON.parse(Order[i].Product_ID)
+    Order[i].Amount=JSON.parse(Order[i].Amount);
+    Order[i].Price=JSON.parse(Order[i].Price);
     for(let j=0;j<Order[i].Product_ID.length;j++){
       let ProductSearch=`SELECT * FROM Uploaded_Product_Info WHERE Product_ID=${Order[i].Product_ID[j]}`
       let Product=Users.prepare(ProductSearch).all();
      Product_Info.push(Product);
-      console.log(Product_Info);
+    
     }
  
  Order[i].Product_Info=Product_Info;
   }
-  
-  console.log(Order);
+
   res.json(Order);
 });
+
+
 
 module.exports = router;

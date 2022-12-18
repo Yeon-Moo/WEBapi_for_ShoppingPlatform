@@ -7,6 +7,19 @@ var bodyParser = require("body-parser");
 const { json } = require("express");
 var cookieParser = require("cookie-parser");
 
+
+
+function readHtml(Htmlname, req, res) {
+	fs.readFile(`./public/html/` + Htmlname + `.html`, function (err, data) {
+	  if (err) console.log(err);
+	  res.setHeader("Content-Type", "text/html");
+	  res.send(data);
+	});
+  }
+
+
+
+
 let search= function(productName){
     //如果商品名不為空，搜尋特定商品
     if(productName!=''){
@@ -48,7 +61,7 @@ let mysearch=function(productName,userId){
 
 router.get('/' ,(req,res) => {
     //取得傳入的商品名並搜尋
-    res.render('search')
+    readHtml('search',req,res)
 })
 
 router.get('/json' ,(req,res) => {
@@ -96,11 +109,7 @@ router.get('/json' ,(req,res) => {
 
 router.get('/Myproduct',(req,res) => {
     //取得傳入的商品名並搜尋
-    received = mysearch(req.query.productName,req.query.userId)
-    res.render('search',{
-        result: received,
-        productName: req.query.productName
-    })
+    readHtml('search',req,res)
 })
 
 

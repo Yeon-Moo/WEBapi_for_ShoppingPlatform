@@ -1,18 +1,11 @@
 
 $(document).ready(function(){
-    // let myproduct_userhint=document.getElementById('myproduct_userhint');
-    // myproduct_userhint.innerHTML='&nbsp &nbsp &nbsp &nbsp &nbsp'+getCookie('certifiedUser')+'的商品';
-    // var test=new Array;
-    // var result=new Array;
-    // for(let i=0;i<11;i++){
-        
-    // }
     axios.get("/json")
     .then(res=>{
         var UAPInfo=res.data;
         var UAP_Product_Info=UAPInfo.Product_Info;
-        var allImage=UAPInfo.Product_Image;
-        console.log(UAPInfo);
+       
+        
 
         if(UAPInfo.Product_Info.length){
         for(var i=0;i<UAP_Product_Info.length;i++){
@@ -172,3 +165,5 @@ $(document).ready(function(){
     })
 
 })
+
+

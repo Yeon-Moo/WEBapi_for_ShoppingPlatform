@@ -7,6 +7,13 @@ const session=require('express-session');
 
 var bodyParser = require('body-parser');
 
+function readHtml(Htmlname, req, res) {
+	fs.readFile(`./public/html/` + Htmlname + `.html`, function (err, data) {
+	  if (err) console.log(err);
+	  res.setHeader("Content-Type", "text/html");
+	  res.send(data);
+	});
+  }
 
 
 var page_login=function(req,res){
@@ -15,13 +22,13 @@ var page_login=function(req,res){
     res.send(`<script>alert('您已經登入過了');
     location.href='/'</script>`);
   }
-  res.render('login');
+  readHtml('login',req,res);
 }
 
 
 
 var page_register=function(req,res){
-  res.render('register')
+ readHtml('register',req,res);
 }
 
 
@@ -88,17 +95,6 @@ router.post('/login', function(req, res, next) {//上傳登入資料
     } 
    
   }
-});
-
-router.get('/', function(req, res, next) {//取得首頁頁面
-  var islogin=false;
-  if(req.cookies.certifiedUser){
-    res.render('users', { title: req.cookies.certifiedUser,name:req.cookies.certifiedUser });
-  }else{
-    res.render('guest', { title: "guest" });
-  }
-  
-
 });
 
 router.get('/logout', function(req, res, next) {//取得logout頁面

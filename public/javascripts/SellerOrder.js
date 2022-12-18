@@ -1,10 +1,10 @@
 
 $(document).ready(function () {
-  
-  Buyer = getCookie("certifiedUser");
+  Seller = getCookie("certifiedUser");
   let Order_div=document.getElementById('Order_Content');
-  axios.get(`/Cart/myOrder/json?Buyer=${Buyer}`).then((res) => {
+  axios.get(`/myproduct/SellerOrder/json?Seller=${Seller}`).then((res) => {
     Order = res.data;
+    console.log(Order);
     
     for(let i=0;i<Order.length;i++){
       let div10=document.createElement('div');
@@ -22,7 +22,7 @@ $(document).ready(function () {
       td0.style="font-size:30px;"
       td0.innerHTML='訂單編號:'+Order[i].Number;
       tr0.appendChild(td0);
-      td1.innerHTML='賣家:'+Order[i].Seller;
+      td1.innerHTML='買家:'+Order[i].Buyer;
       tr1.appendChild(td1);
       td2.innerHTML='下單時間:2022/10/10';
       tr2.appendChild(td2);

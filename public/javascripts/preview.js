@@ -6,7 +6,7 @@ function preview() {
     Upload_ImgDiv.innerHTML="";
     var frame=document.createElement('img');
     Upload_ImgDiv.style="width:500px;height:300px";
-    frame.style="width:500px;height:300px";
+    frame.style="width:500px;height:auto;";
 
     console.log(event.target.files);
     if(event.target.files[0]==undefined){

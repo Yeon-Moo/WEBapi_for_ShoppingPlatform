@@ -36,6 +36,8 @@ if(getCookie('certifiedUser')){
     user.innerHTML='';
     user.appendChild(myProduct);
     user.appendChild(Logout_div);
+}else{
+    document.getElementById('Cart').style='display:none;';
 }
 
 

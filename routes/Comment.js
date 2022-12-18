@@ -8,13 +8,19 @@ const multer = require("multer");
 var cookieParser = require("cookie-parser");
 const { json } = require("express");
 
+function readHtml(Htmlname, req, res) {
+	fs.readFile(`./public/html/` + Htmlname + `.html`, function (err, data) {
+	  if (err) console.log(err);
+	  res.setHeader("Content-Type", "text/html");
+	  res.send(data);
+	});
+  }
 
 
 
+router.get("/", function (req, res, next) {
 
-router.get("/", function (request, response, next) {
-console.log(request.query.productID);
-  response.render("Comment");
+  readHtml("Comment",req,res);
 });
 
 router.get("/json", function (req, res, next) {
@@ -53,8 +59,8 @@ router.get("/json", function (req, res, next) {
 	//   })
 
 
-router.get("/add", function (request, response, next) {
-  response.render("add_Comment");
+router.get("/add", function (req, res, next) {
+  readHtml("add_Comment",req,res);
 });
 
 router.post("/add", function (req, res, next) {

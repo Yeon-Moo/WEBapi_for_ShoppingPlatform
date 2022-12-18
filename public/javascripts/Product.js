@@ -36,7 +36,7 @@ $(document).ready(function(){
         Upload_User_Mall.innerHTML=Product.Upload_User_Name;
         Product_Content.innerHTML=Product.Product_Content;
         Product_Image.src=`./img/${Product.Product_Image_Address}`;
-        Product_Image.style="width:400px;height:500px;"
+        Product_Image.style="width:450px;height:auto;"
         Product_Name.innerHTML=Product.Product_Name;
         Product_Price.innerHTML='$'+Product.Product_Price;
 
