@@ -1,4 +1,8 @@
 # WEBapi_for_ShoppingPlatform
+
+後端使用Express.js框架 前端使用html,CSS,Javascript
+
+
 先進入主目錄
 
 並啟動
