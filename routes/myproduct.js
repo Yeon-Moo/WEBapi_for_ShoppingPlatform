@@ -168,17 +168,16 @@ router.get("/json", function (req, res, next) {//用來向網頁發送json
 
 router.delete("/", function (req, res, next) {
  console.log(req.query);
-
+let Seller=req.cookies.certifiedUser;
  var IDsearch=`SELECT Product_ID FROM Uploaded_Product_Info 
  WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID}`;
   var IDsearchRun=Users.prepare(IDsearch).all();
   Product_ID=IDsearchRun[0].Product_ID;
   console.log(Product_ID);
  var commentDelete=`DELETE FROM Comment WHERE Product_ID=${Product_ID}`;
-
+ var CartDelete=`DELETE FROM Cart WHERE Seller='${Seller}' AND Product_ID=${req.query.Product_ID}`
  var sqlDelete=`DELETE FROM Uploaded_Product_Info WHERE Upload_User_Name='${req.cookies.certifiedUser}' AND Upload_User_Product_ID=${req.query.Product_ID} `;
- 
-
+  let DeleteCart=Users.prepare(CartDelete).run();//下架商品同時 刪除所有人的購物車中有關此商品的訊息以確保資料庫不會被廢棄資料佔據
  var delete_Comment=Users.prepare(commentDelete).run();//下架商品同時 刪除評論以確保資料庫不會被廢棄資料佔據
  var delete_product=Users.prepare(sqlDelete).run();
    var fileRead=fs.readdirSync(`./users/${req.cookies.certifiedUser}/${req.query.Product_ID}`);

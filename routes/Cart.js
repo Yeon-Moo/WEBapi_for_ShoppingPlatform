@@ -20,33 +20,56 @@ router.get("/", function (req, res, next) {
   readHtml("Cart", req, res);
 });
 
+
+
+
 router.post("/", function (req, res, next) {
   let { Product_ID, Buyer, Amount, Seller } = req.body;
-  console.log(
-    "Product_ID:" +
-      Product_ID +
-      ",Buyer:" +
-      Buyer +
-      ",Seller:" +
-      Seller +
-      ",Amount:" +
-      Amount
-  );
+    let UserMaxCartIDSql=`SELECT User_Cart FROM Cart WHERE Buyer='${Buyer}' ORDER BY User_Cart DESC`;
+    MAXSql=Users.prepare(UserMaxCartIDSql).all();
+    if(!MAXSql[0]){
+      Max=1;
+    }else{
+      Max=MAXSql[0].User_Cart+1;
+    }
+    
+    let SameProductSearchSql=`SELECT * FROM Cart WHERE Buyer='${Buyer}' AND Product_ID=${Product_ID}`;
+    let SameProductSearch=Users.prepare(SameProductSearchSql).all();
+    console.log(SameProductSearch.length);
+    if(SameProductSearch.length){
+      console.log('hi2');
+      Amount=parseInt(Amount);
+      let OriginAmount=SameProductSearch[0].Amount;
+      console.log(OriginAmount);
+      let UpdateCartAmountSql=`Update Cart SET Amount=${Amount+OriginAmount} WHERE Buyer='${Buyer}' AND Product_ID=${Product_ID}`;
+      let UpdateCartAmount=Users.prepare(UpdateCartAmountSql).run();
+    }else{
+      console.log('hi1');
+      let CartInsertSql = `INSERT INTO  Cart (
+        "Buyer",
+        "Seller",
+        "Product_ID",
+        "Amount",
+        "User_Cart") VALUES(?,?,?,?,?)`;
+      let CarInsert = Users.prepare(CartInsertSql).run(
+        Buyer,
+        Seller,
+        Product_ID,
+        Amount,
+        Max
+      );
+    }
 
-  let CartInsertSql = `INSERT INTO  Cart (
-		"Buyer",
-		"Seller",
-		"Product_ID",
-		"Amount") VALUES(?,?,?,?)`;
-  let CarInsert = Users.prepare(CartInsertSql).run(
-    Buyer,
-    Seller,
-    Product_ID,
-    Amount
-  );
+
 
   res.end();
 });
+
+
+
+
+
+
 
 router.get("/json", function (req, res, next) {
   var Cartsearch = `SELECT * FROM Cart WHERE (Buyer='${req.cookies.certifiedUser}')`; //User All Product search
@@ -78,6 +101,16 @@ router.get("/json", function (req, res, next) {
     res.json(CartJson);
   });
 });
+
+router.delete('/',function(req,res,next){
+  console.log(req.query);
+  let data=req.query;
+  let cartDelete=`DELETE FROM Cart WHERE Buyer='${data.Buyer}' AND User_Cart=${data.Cart}`
+  let Delete=Users.prepare(cartDelete).run();
+  res.end();
+})
+
+
 
 router.get("/Checkout", function (req, res, next) {
   readHtml("Checkout", req, res);
@@ -156,9 +189,6 @@ router.get("/Checkout/json", function (req, res, next) {
   data.Seller_Amount = Seller_Amount;
   data.Product_ID = Product_ID;
   data.Seller_Price = Seller_Price;
-  // console.log(Seller_name);
-  // console.log(Seller_Amount);
-
   res.json(data);
 });
 
@@ -169,14 +199,7 @@ router.post("/Checkout", function (req, res, next) {
   } else {
     let Product_string;
     console.log(req.body.Amount.toString());
-    // for(let i=0;i<req.body.Product.length;i++){
-    // 	if(i==0){
-    // 		Product_string=`${req.body.Product[i]}`;
-    // 	}else{
-    // 		Product_string=Product_string+`,${req.body.Product[i]}`
-    // 	}
 
-    // }
     Product_string = '"' + Product_string + '"';
     console.log(Product_string);
     res.cookie("Product", req.body.Product.toString(), {
@@ -194,9 +217,20 @@ router.post("/Checkout", function (req, res, next) {
 router.post("/Checkout/Order", function (req, res, next) {
   console.log(req.body);
   let data = req.body;
+  let dt = new Date();
+  let month=dt.getMonth()+1;
+  let second=dt.getSeconds();
+  if(month>12){
+	month=month-12;
+  }
+  if(second<10){
+    second='0'+second;
+  }
+  let format_time=dt.getFullYear()+'/'+month+'/'+dt.getDate()+' '+dt.getHours()+':'+dt.getMinutes()+':'+second;
+
 
   let sqlInsert =
-    'INSERT INTO `Order` ("Buyer","Seller","Product_ID","Amount","Price","Accout_Stat") VALUES(?,?,?,?,?,?)';
+    'INSERT INTO `Order` ("Buyer","Seller","Product_ID","Amount","Price","Accout_Stat","Time") VALUES(?,?,?,?,?,?,?)';
   console.log(data.Seller.length);
   var Order;
   for (let i = 0; i < data.Seller.length; i++) {
@@ -211,7 +245,8 @@ router.post("/Checkout/Order", function (req, res, next) {
       Product,
       Amount,
       Price,
-      0
+      0,
+      format_time
     );
   }
   res.json({ success: true });
@@ -236,11 +271,15 @@ router.get("/myOrder/json", function (req, res, next) {
       let ProductSearch=`SELECT * FROM Uploaded_Product_Info WHERE Product_ID=${Order[i].Product_ID[j]}`
       let Product=Users.prepare(ProductSearch).all();
      Product_Info.push(Product);
-    
     }
- 
  Order[i].Product_Info=Product_Info;
   }
+
+
+
+
+
+  
 
   res.json(Order);
 });

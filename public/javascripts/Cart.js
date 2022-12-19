@@ -1,3 +1,4 @@
+
         let Product_ID=new Array;
         let Product_Amount=new Array;
 
@@ -19,6 +20,10 @@ $(document).ready(function(){
             let hidden_amount=document.createElement('input');
             hidden_amount.type='hidden';
             hidden_amount.id=`Product_ID=${cart[i].Product_ID}`;
+            let delete_btn=document.createElement('Button');
+            delete_btn.classList="Delete btn btn-danger";
+            delete_btn.innerHTML='從購物車刪除';
+            delete_btn.value=cart[i].User_Cart;
             let div1=document.createElement('div');
             let div2=document.createElement('div');
             let div3=document.createElement('div');
@@ -29,6 +34,7 @@ $(document).ready(function(){
             let div8=document.createElement('div');
             let div9=document.createElement('div');
             let div10=document.createElement('div');
+            let div11=document.createElement('div');
             let h5_4=document.createElement('h5');
             let img1=document.createElement('img');
             let h5_1=document.createElement('h5');//product name
@@ -50,6 +56,8 @@ $(document).ready(function(){
             div3.classList="d-flex justify-content-between";
             div4.classList="d-flex flex-row align-items-center";
             div6.classList="ms-3";
+            div11.classList="d-flex flex-row align-items-center";
+            div11.appendChild(delete_btn);
             div7.classList="d-flex flex-row align-items-center";
             div8.style="width: 50px;";
             div9.style="width: 80px;";
@@ -64,7 +72,7 @@ $(document).ready(function(){
             h5_2.innerHTML="<span style='font-size:15px;'>數量</span><br>"+cart[i].Amount;
             hidden_amount.value=cart[i].Amount;
             h5_3.classList="mb-0";
-            h5_3.innerHTML="$"+cart[i].Price*cart[i].Amount;
+            h5_3.innerHTML="<span style='font-size:15px;'>總價</span><br>$"+cart[i].Price*cart[i].Amount;
         
             div5.appendChild(img1);
             div6.appendChild(h5_1);
@@ -78,7 +86,7 @@ $(document).ready(function(){
 
             div7.append(div8,div9,a1);
 
-            div3.append(div4,div7);
+            div3.append(div4,div7,div11);
             div2.appendChild(div3);
             div1.appendChild(div10);
             div1.appendChild(div2);
@@ -102,6 +110,16 @@ $(document).ready(function(){
                console.log('Amount='+Product_Amount);
 
             }
+        })
+
+        $('.Delete').click(function(){
+            let Cart=event.target.value;
+            Buyer=getCookie('certifiedUser');
+            axios.delete(`/Cart?Buyer=${Buyer}&Cart=${Cart}`)
+            .then(res=>{
+                console.log(res);
+                history.go(0);
+            })
         })
 
 

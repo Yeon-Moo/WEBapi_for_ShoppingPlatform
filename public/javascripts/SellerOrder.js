@@ -24,7 +24,7 @@ $(document).ready(function () {
       tr0.appendChild(td0);
       td1.innerHTML='買家:'+Order[i].Buyer;
       tr1.appendChild(td1);
-      td2.innerHTML='下單時間:2022/10/10';
+      td2.innerHTML='下單時間:'+Order[i].Time;
       tr2.appendChild(td2);
       let totalPrice=0;
       

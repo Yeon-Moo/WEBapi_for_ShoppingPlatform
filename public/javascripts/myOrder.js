@@ -5,7 +5,7 @@ $(document).ready(function () {
   let Order_div=document.getElementById('Order_Content');
   axios.get(`/Cart/myOrder/json?Buyer=${Buyer}`).then((res) => {
     Order = res.data;
-    
+    console.log(Order);
     for(let i=0;i<Order.length;i++){
       let div10=document.createElement('div');
       let div11=document.createElement('div');
@@ -24,7 +24,7 @@ $(document).ready(function () {
       tr0.appendChild(td0);
       td1.innerHTML='賣家:'+Order[i].Seller;
       tr1.appendChild(td1);
-      td2.innerHTML='下單時間:2022/10/10';
+      td2.innerHTML='下單時間:'+Order[i].Time;
       tr2.appendChild(td2);
       let totalPrice=0;
       
