@@ -73,33 +73,84 @@ router.post("/", function (req, res, next) {
 
 router.get("/json", function (req, res, next) {
   var Cartsearch = `SELECT * FROM Cart WHERE (Buyer='${req.cookies.certifiedUser}')`; //User All Product search
-
+  let Amount=new Array;
   var Cart = Users.prepare(Cartsearch).all();
-
   console.log(Cart);
-  // let Image=new Array(Cart.length);
-  // let Price=new Array(Cart.length);
-  // let Product_Name=new Array(Cart.length);
+  for(let i=0;i<Cart.length;i++){
+    Amount.push(Cart[i].Amount);
+  }
+  let result=new Array;
+
   for (let i = 0; i < Cart.length; i++) {
     let productSearch = `SELECT * FROM Uploaded_Product_Info WHERE Product_ID=${Cart[i].Product_ID}`;
     let product = Users.prepare(productSearch).get();
+    result.push(product);
     Cart[i].Image = product.Product_Image_Address;
     Cart[i].Product_Name = product.Product_Name;
     Cart[i].Price = product.Product_Price;
   }
-  console.log(Cart);
 
-  fs.readFile("./public/json/Cart_Info.json", function (err, CartInfo) {
-    if (err) console.log(err);
-    var CartJson = CartInfo.toString(); //將二進制數據轉回字串
-    CartJson = JSON.parse(CartJson);
 
-    for (var i = 0; i < Cart.length; i++) {
-      CartJson.Cart.push(Cart[i]);
+let CartJson={};
+
+let Seller_Amount = new Array();
+var Seller_name = new Array();
+let Product_ID = new Array();
+let Seller_Price = new Array();
+let Cart_index=new Array();
+let index = 0;
+for (let i = 0; i < result.length; i++) {
+  let flag = 0; //flag=0代表找到相同名稱 =1代表未找到
+  if (Seller_name.length == 0) {
+    Product_ID[index] = new Array();
+    Seller_Amount[index] = new Array();
+    Seller_Price[index] = new Array();
+    Cart_index[index]=new Array();
+    Seller_Price[index].push(result[i].Product_Price * Amount[i]);
+    Product_ID[index].push(result[i].Product_ID);
+    Cart_index[index].push(i);
+    Seller_Amount[index].push(Amount[i]);
+
+    Seller_name[index] = result[i].Upload_User_Name;
+
+    index++;
+  } else {
+    for (let j = 0; j < Seller_name.length; j++) {
+      if (result[i].Upload_User_Name == Seller_name[j]) {
+        flag = 0;
+        Product_ID[j].push(result[i].Product_ID);
+        Cart_index[j].push(i);
+        Seller_Amount[j].push(Amount[i]);
+        Seller_Price[j].push(result[i].Product_Price * Amount[i]);
+        break;
+      } else {
+        flag = 1;
+      }
     }
-    CartJson.total = Cart.length;
-    res.json(CartJson);
-  });
+    if (flag == 1) {
+      Seller_Amount[index] = new Array();
+      Seller_Price[index] = new Array();
+      Product_ID[index] = new Array();
+      Cart_index[index]=new Array();
+      Product_ID[index].push(result[i].Product_ID);
+      Cart_index[index].push(i);
+
+      Seller_Price[index].push(result[i].Product_Price * Amount[i]);
+      Seller_Amount[index].push(Amount[i]);
+      Seller_name[index++] = result[i].Upload_User_Name;
+      index++;
+    }
+  }
+}
+CartJson.Cart_index=Cart_index;
+CartJson.Seller_name = Seller_name;
+CartJson.Seller_Amount = Seller_Amount;
+CartJson.Product_ID = Product_ID;
+CartJson.Seller_Price = Seller_Price;
+CartJson.Product_Info=result;
+CartJson.Cart=Cart;
+res.json(CartJson);
+
 });
 
 router.delete('/',function(req,res,next){
@@ -127,7 +178,7 @@ router.get("/Checkout/json", function (req, res, next) {
   for (let i = 0; i < Amount.length; i++) {
     newAmount.push(parseInt(Amount[i]));
   }
-  console.log(newAmount);
+
   Amount = newAmount;
   // console.log(Cart);
   var result = new Array();
@@ -142,8 +193,9 @@ router.get("/Checkout/json", function (req, res, next) {
 
   //////////////////////////////////////////
   //找出訂單中有幾個不同賣家以及訂單中存有的賣家的商品數量
-  var Seller_name = new Array();
+
   let Seller_Amount = new Array();
+  var Seller_name = new Array();
   let Product_ID = new Array();
   let Seller_Price = new Array();
   let index = 0;
