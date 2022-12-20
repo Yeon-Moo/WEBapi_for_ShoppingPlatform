@@ -53,9 +53,22 @@ $(document).ready(function(){
                 toastr.success("已將商品加入購物車!");
             })
         
-            
-        
-        
+        })
+
+        $('#Product_Buy').click(function(){
+            let Product_Amount=document.getElementById('Amount').value;
+            axios.post('/Cart/Checkout',{
+                Product:Product_ID,
+                Amount:Product_Amount
+            })
+            .then(res=>{    
+                console.log(res.data.success);
+                if(res.data.success==false){
+                    alert("請至少選擇一樣商品!!!");
+                }else if(res.data.success==true){
+                    window.location.href='/Cart/Checkout';
+                }
+            })
         })
         
 
