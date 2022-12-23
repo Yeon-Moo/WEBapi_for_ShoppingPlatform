@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>this is SearchBar</title>
+        <style>  
+            .form{
+                margin-left: 5%;
+                margin-bottom: 10px;
+            }
+            div.result{
+                margin-left: 5%;
+            }
+            div.wrap {
+                margin-left: 5%;
+                width: 90%;
+                display: flex;
+                vertical-align: top;
+            }
+            div.wrap div{
+                display: inline-block;
+                vertical-align: top;
+            }
+            div.productPhoto {
+                display:flex;
+                width: 150px;
+                height: 150px;
+                border: 3px solid #73AD21;
+            }
+            div.productPhoto img{
+                max-width: 100%;
+                max-height: 100%;
+            }
+            div.productDescribe {
+                width: inherit;
+                height: 150px;
+                border: 3px solid #73AD21;
+            }
+            div.productDescribe div{
+                display: flex;
+                height: 50px;
+                align-items: center; 
+            }       
+        </style>
+            <link rel="stylesheet" href="/stylesheets/style.css">
+            <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+            <script src="/javascripts/font-awesome.js"></script>
+            <script src="/javascripts/axios.min.js"></script>
+            <script src="/javascripts/jquery.js"> </script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
+            <div id="search"> 
+              <form action="/search" method="get"> 
+                <div class="searchinput">
+                  <div>
+                    <input type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;width:700px;z-index:-1;">
+                  </div>
+                  <div style="width:25px;height:35px;">
+                    <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="users" id="user"> 
+              <div> <a href="/users/login" class="user_a">登入</a></div>
+              <div> <a href="/users/register" class="user_a">註冊     </a></div>
+            </div>
+            <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
+           
+          </div><br><br>
+          <div><h4 id="myproduct_userhint"></h4></div>
+          <script src="/javascripts/cookie.js"></script>
+        <!--
+             <form class="form" action="/search" method="get">
+            <input type="text" id="productSearch" name="productName">
+            <input type="text" id="productSearch" name="userId">
+            <button type="submit">MySearch</button>
+        </form>
+        -->
+       
+      
+        <div id="result" class="goods">
+
+        </div>
+
+        <script src="/javascripts/search.js"></script>
+    </body>
+</html>

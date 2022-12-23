@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <script src="/javascripts/font-awesome.js"></script>
+        <script src="/javascripts/axios.min.js"></script>
+        <script src="/javascripts/jquery.js"> </script>
+        <title id="Website_title">評論管理</title>
+    </head>
+    <body>
+        <div id="header">
+            <div id="title"> <a href="/" class="normaltextlink"><span
+                        style="color:aqua">Yeon's </span>Shop </a></div>
+            <div id="search">
+                <form action="/search" method="get">
+                    <div class="searchinput">
+                        <div>
+                            <input type="text" placeholder="請輸入欲搜尋商品"
+                                name="productName"
+                                style="border:0px;height:25px;width:700px;z-index:-1;">
+                        </div>
+                        <div style="width:25px;height:35px;">
+                            <button type="submit"
+                                style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;"
+                                class="btn btn-primary"><i class="fas
+                                    fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="users" id="user">
+                <div> <a href="/users/login" class="user_a">登入</a></div>
+                <div> <a href="/users/register" class="user_a">註冊 </a></div>
+            </div>
+            <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
+            <script src="/javascripts/cookie.js"></script>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <!-- Sample Data -->
+                        <div class="histort_content">
+                            <!-- <script>var a = 0;</script>  -->
+                            <button id="histort_content_display_btn"
+                                type="submit" onclick=""
+                                style="background-color: rgb(134, 27,
+                                192);color: antiquewhite;border-radius: 5px;">歷史評論</button>
+                        </div>
+
+                    </div>
+                    <div class="col" >
+                        <h3 id="productName">
+                           
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <a id="add_Comment" class="btn btn-success btn-sm float-end">新增留言</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" 
+                id="history_content_ds">
+                <div class="table-responsive" id="Comment_table">
+                    <table class="table table-bordered" id="History_Content">
+                        <tr>
+                            <th>使用者</th>
+                            <th>留言日期</th>
+                            <th>留言內容</th>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="/javascripts/Comment.js"></script>
+    </body>
+</html>

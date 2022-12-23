@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Homepage | Yeon's Shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/homepage.css">
+    <link rel="stylesheet" href="/stylesheets/homepage_title.css">
+    <link rel="stylesheet" href="/stylesheets/homepage_second.css">
+    <script src="/javascripts/font-awesome.js"></script>
+    <script src="/javascripts/axios.min.js"></script>
+    <script src="/javascripts/jquery.js"> </script>
+ 
+  </head>
+  <body>
+    <div>
+      <div id="header">
+        <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
+        <div class="center_seach">
+        <div id="search"> 
+          <form action="/search" method="get" class="form_search_width"> 
+            <div class="searchinput">
+              <div class="search_text_div">
+                <input class="text_input_box" type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;z-index:-1;border-radius: 5px;">
+              </div>
+              <div style="width:10%;height:35px;left: 0%;position: relative;transform: translate(-50%);">
+                <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+        <div class="users" id="user"> 
+          <div> <a href="/users/login" class="user_a">登入</a></div>
+          <div> <a href="/users/register" class="user_a">註冊     </a></div>
+        </div>
+        <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
+
+        <script src="/javascripts/cookie.js"></script>
+      </div><br>
+      <div class="focus">
+        <div class="goods_title" >
+
+
+        </div>
+        <div class="goods_second" >
+          <div class="second_left">
+            <div class="today1" >
+
+            </div>
+            <div class="today2">
+ 
+            </div>
+          </div>
+
+          <div class="second_right" >
+            <div class="today3" >
+
+            </div>
+            <div class="today4" >
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="contents">        
+        <div class="all_goodss"> 
+        </div>
+      </div>
+    </div>
+    
+  </body>
+  <script src="/javascripts/goods.js"> </script>
+</html>

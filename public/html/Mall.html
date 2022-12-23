@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Yeon's Shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <script src="/javascripts/font-awesome.js"></script>
+    <script src="/javascripts/axios.min.js"></script>
+    <script src="/javascripts/jquery.js"> </script>
+  </head>
+  <body>
+    <div>
+      <div id="header">
+        <div id="title"> <a href="/" class="normaltextlink"><span style="color:aqua">Yeon's  </span>Shop </a></div>
+        <div id="search"> 
+          <form action="/products" method="get"> 
+            <div class="searchinput">
+              <div>
+                <input type="text" placeholder="請輸入欲搜尋商品" name="productName" style="border:0px;height:25px;width:700px;z-index:-1;">
+              </div>
+              <div style="width:25px;height:35px;">
+                <button type="submit" style="padding-top:3px;padding-left:5px;padding-right:6px;padding-bottom:3px;" class="btn btn-primary"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="users" id="user"> 
+          <div> <a href="/users/login" class="user_a">登入</a></div>
+          <div> <a href="/users/register" class="user_a">註冊     </a></div>
+        </div>
+        
+        <div id="Cart"><a href="/Cart" id="myCart">我的購物車</a></div>
+      </div><br><br>
+      <div><h4 id="seller_name"></h4></div>
+      <script src="/javascripts/cookie.js"></script>
+      <div class="content">
+        <div class="goods"> </div>
+        <div style="display:flex;flex-direction:column;width:200px;height:200px;">
+          <div>
+            <form method="get" action="/search">
+              <label for="search_product">請輸入欲搜尋商品</label>
+              <input id="search_product" name="productName" type="text">
+              <input name="Mall" id="Mall"  type="hidden">
+              <br>
+              <br>
+              <button style="position:relative;width:70px;height:50px;" onclick='/search/myproduct' class="btn btn-success">搜尋</button>
+            </form>
+           
+          </div>
+        </div>
+        <script src="/javascripts/Mall.js"> </script>
+      </div>
+    </div>
+  </body>
+</html>
