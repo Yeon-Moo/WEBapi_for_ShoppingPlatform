@@ -68,12 +68,12 @@
 .contents{
     display: flex;
     flex-direction: row;
-    width:1500px;
+    width:100%;
 }
 .all_goodss{
     /*border: 5px solid rgb(0, 0, 0);*/
     /*border-radius: 5px;*/
-    width: 1500px;
+    width: 100%;
     display: flex;
     /* flex-direction: row-reverse; */
     flex-wrap: wrap;
