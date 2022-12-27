@@ -53,8 +53,10 @@ let mysearch=function(productName,userId){
 
         
     //如果商品名為空，搜尋所有商品
+    }else{
+      var Mall_result = Users.prepare(`SELECT * FROM Uploaded_Product_Info WHERE Upload_User_Name like '%${userId}%'`).all()
     }
-    console.log('Hi');
+
     console.log(Mall_result);
     return Mall_result
 }
@@ -69,9 +71,10 @@ router.get('/json' ,(req,res) => {
     console.log(req.query);
     Mall=req.query.Mall;
     productName=req.query.productName;
-    result=search(productName);
-    Mall_result=mysearch(productName,Mall);
+   
+   
     if(Mall && productName){
+      Mall_result=mysearch(productName,Mall);
         fs.readFile('./public/json/Product_Info.json',function(err,ProductInfo){
             if(err)console.log(err);
             console.log("hello");
@@ -85,6 +88,7 @@ router.get('/json' ,(req,res) => {
             res.json(Product);
           })
     }else if(productName){
+      result=search(productName);
         console.log("hello");
         fs.readFile('./public/json/Product_Info.json',function(err,ProductInfo){
             if(err)console.log(err);
@@ -102,6 +106,34 @@ router.get('/json' ,(req,res) => {
             res.json(Product);
         
           })
+    }else if(Mall){
+      Mall_result=mysearch(productName,Mall);
+      fs.readFile('./public/json/Product_Info.json',function(err,ProductInfo){
+          if(err)console.log(err);
+          console.log("hello");
+          var Product=ProductInfo.toString(); //將二進制數據轉回字串
+          Product=JSON.parse(Product);
+          for(var i=0;i<Mall_result.length;i++){
+            Product.Product_Info.push(Mall_result[i]);
+          }
+          Product.total=Mall_result.length;
+          console.log(Product);
+          res.json(Product);
+        })
+    }else if ( productName==""){
+      result=Users.prepare(`SELECT * FROM Uploaded_Product_Info`).all();
+      fs.readFile('./public/json/Product_Info.json',function(err,ProductInfo){
+        if(err)console.log(err);
+        var Product=ProductInfo.toString(); //將二進制數據轉回字串
+        Product=JSON.parse(Product);
+        for(var i=0;i<result.length;i++){
+          Product.Product_Info.push(result[i]);
+        }
+        Product.total=result.length;
+        console.log(Product);
+        res.json(Product);
+    
+      })
     }
    
 

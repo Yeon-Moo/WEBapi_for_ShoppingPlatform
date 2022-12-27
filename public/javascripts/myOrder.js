@@ -71,6 +71,7 @@ $(document).ready(function () {
         div7.classList='d-flex flex-row align-items-center';
         div7.style='width:300px;'
         div8.style='width: 80px;';
+        div9.style="width:200px;"
         h5_3.classList='mb-0';
         h5_3.innerHTML='總價:'+Order[i].Price[j];
         div6.appendChild(h5_1);

@@ -86,6 +86,7 @@ $(document).ready(function(){
                 h5_2.innerHTML="<span style='font-size:15px;'>數量</span><br>"+cart.Amount;
                 hidden_amount.value=cart.Amount;
                 h5_3.classList="mb-0";
+              
                 h5_3.innerHTML="<span style='font-size:15px;'>總價</span><br>$"+cart.Price*cart.Amount;
             
                 div5.appendChild(img1);

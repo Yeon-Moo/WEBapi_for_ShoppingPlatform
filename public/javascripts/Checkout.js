@@ -49,7 +49,7 @@ $(document).ready(function(){
                         div6.classList="ms-3";
                         div7.classList="d-flex flex-row align-items-center";
                         div8.style="width: 50px;";
-                        div9.style="width: 150px;";
+                        div9.style="width: 200px;";
                         link_product.href=`/products?ID=${cart[j].Product_ID}`
                         img1.src="/img/"+cart[j].Product_Image_Address;
                         img1.classList="img-fluid rounded-3";
